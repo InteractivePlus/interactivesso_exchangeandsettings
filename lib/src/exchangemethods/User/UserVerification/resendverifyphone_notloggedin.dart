@@ -1,3 +1,4 @@
+import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
 import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/captcharequiredrequest.dart';
@@ -24,10 +25,10 @@ class ResendVerifyPhoneNotLoggedInRequest<CaptchaSerialized, CaptchaInfo extends
     this.preferredCommunicationMethod
   });
 
-  static Map<String,dynamic> staticSerializeWithSettings<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
+  static Map<String,dynamic> staticSerializeWithSettings<FineSetting extends InteractiveSSOExchangeSharedSetting>
   (
-    ResendVerifyPhoneNotLoggedInRequest<CaptchaSerializedInfo,CaptchaInfo> req,
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+    ResendVerifyPhoneNotLoggedInRequest req,
+    FineSetting sharedSettings
   ){
     Map<String,dynamic> retMap = {
       'user_unique_id': req.userUniqueId,
@@ -37,26 +38,14 @@ class ResendVerifyPhoneNotLoggedInRequest<CaptchaSerialized, CaptchaInfo extends
     if(req.preferredCommunicationMethod != null){
       retMap['preferred_method'] = Serializable.convertToSerialized(req.preferredCommunicationMethod!);
     }
-    ExchangeCaptchaRequiredRequest.appendSerialize(retMap, req, sharedSettings.captchaInfoSerializer);
+    ExchangeCaptchaRequiredRequest.appendSerializeWithSetting(retMap, req, sharedSettings);
     return retMap;
   }
 
-  static Map<String,dynamic> staticSerializeWithSettingsGeneral<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
-  (
-    ResendVerifyPhoneNotLoggedInRequest req,
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
-  ){
-    if(req is ResendVerifyPhoneNotLoggedInRequest<CaptchaSerializedInfo,CaptchaInfo>){
-      return staticSerializeWithSettings(req, sharedSettings);
-    }else{
-      throw InteractivePlusSystemException.SERIALIZATION_EXCEPTION;
-    }
-  }
-
-  static ResendVerifyPhoneNotLoggedInRequest staticDeserializeWithSettings<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
+  static ResendVerifyPhoneNotLoggedInRequest staticDeserializeWithSettings<FineSetting extends InteractiveSSOExchangeSharedSetting>
   (
     Map<String,dynamic> reqSerialized,
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+    FineSetting sharedSettings
   ) => ResendVerifyPhoneNotLoggedInRequest(
     userUniqueId: reqSerialized['user_unique_id'] as String, 
     password: reqSerialized['password'] as String, 
@@ -65,10 +54,10 @@ class ResendVerifyPhoneNotLoggedInRequest<CaptchaSerialized, CaptchaInfo extends
     preferredCommunicationMethod: reqSerialized['preferred_method'] == null ? null : CommunicationMethod.fromJson(reqSerialized['preferred_method'] as String)
   );
 
-  static List<String>? validate<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
+  static List<String>? validate<FineSetting extends InteractiveSSOExchangeSharedSetting>
   (
     ResendVerifyPhoneNotLoggedInRequest req,
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+    FineSetting sharedSettings
   ){
     List<String> retList = List.empty(growable: true);
     if(req.userUniqueId.isEmpty){
@@ -84,7 +73,7 @@ class ResendVerifyPhoneNotLoggedInRequest<CaptchaSerialized, CaptchaInfo extends
   }
 }
 
-final ExchangeFormat<ResendVerifyPhoneNotLoggedInRequest, void, void, Map<String,dynamic>, void, void> resendVerifyPhone_NotLoggedIn_API = ExchangeFormat(
+final InteractiveSSOExchangeFormat<ResendVerifyPhoneNotLoggedInRequest, void, void, Map<String,dynamic>, void, void> resendVerifyPhone_NotLoggedIn_API = InteractiveSSOExchangeFormat(
   exchangeProtocolName: 'resendVerifyPhone_NotLoggedIn_API', 
   httpMetaData: const ExchangeHTTPMetaData(
     method: ExchangeHTTPMethod.POST, 
@@ -97,11 +86,11 @@ final ExchangeFormat<ResendVerifyPhoneNotLoggedInRequest, void, void, Map<String
     numRequestPerUserPerMin: 2
   ), 
   parseRequest: ResendVerifyPhoneNotLoggedInRequest.staticDeserializeWithSettings,
-  serializeRequest: ResendVerifyPhoneNotLoggedInRequest.staticSerializeWithSettingsGeneral,
+  serializeRequest: ResendVerifyPhoneNotLoggedInRequest.staticSerializeWithSettings,
   validateRequest: ResendVerifyPhoneNotLoggedInRequest.validate,
-  parseSuccessResponseData: exchangeVoidToVoidFunction, 
-  parseFailedResponseData: exchangeVoidToVoidFunction, 
-  serializeSuccessResponseData: exchangeVoidToVoidFunction, 
-  serializeFailedResponseData: exchangeVoidToVoidFunction, 
+  parseSuccessResponseData: ssoExchangeVoidToVoidFunc, 
+  parseFailedResponseData: ssoExchangeVoidToVoidFunc, 
+  serializeSuccessResponseData: ssoExchangeVoidToVoidFunc, 
+  serializeFailedResponseData: ssoExchangeVoidToVoidFunc, 
   requireVerificationCode: false
 );

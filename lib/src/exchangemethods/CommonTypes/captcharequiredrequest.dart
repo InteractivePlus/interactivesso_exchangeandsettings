@@ -1,6 +1,5 @@
-import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
-import 'package:interactivesso_exchangeandsettings/src/setting_objects/sharedsettings.dart';
+import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 
 class ExchangeCaptchaRequiredRequest<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>{
   CaptchaInfo captchaInfo;
@@ -16,38 +15,25 @@ class ExchangeCaptchaRequiredRequest<CaptchaSerializedInfo,CaptchaInfo extends C
       'captcha_info': serializer.serialize(request.captchaInfo)
     };
   }
-  static Map<String,dynamic> serializeWithSetting<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>(
-    ExchangeCaptchaRequiredRequest<CaptchaSerializedInfo, CaptchaInfo> request, 
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings){
-    return serialize(request, sharedSettings.captchaInfoSerializer);
-  }
-  static void appendSerialize<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
+  static Map<String,dynamic> serializeWithSetting<FineSetting extends InteractiveSSOExchangeSharedSetting>(
+    ExchangeCaptchaRequiredRequest request, 
+    FineSetting sharedSettings
+  ) => serialize(request, sharedSettings.captchaInfoSerializer);
+  
+  static void appendSerializeWithSetting<FineSetting extends InteractiveSSOExchangeSharedSetting>
   (
     Map<String,dynamic> toAppend, 
-    ExchangeCaptchaRequiredRequest<CaptchaSerializedInfo, CaptchaInfo> request, 
-    CaptchaSubmitInfoSerializer<CaptchaSerializedInfo, CaptchaInfo> serializer
+    ExchangeCaptchaRequiredRequest request, 
+    FineSetting sharedSettings
   ){
-    toAppend['captcha_info'] = serializer.serialize(request.captchaInfo);
+    var serialized = serializeWithSetting(request, sharedSettings);
+    toAppend.addAll(serialized);
   }
-  static void appendSerializeWithSetting<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
-  (
-    Map<String,dynamic> toAppend, 
-    ExchangeCaptchaRequiredRequest<CaptchaSerializedInfo, CaptchaInfo> request, 
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings)
-  {
-    appendSerialize(toAppend, request, sharedSettings.captchaInfoSerializer);
-  }
-  static CaptchaInfo fromMap<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>(Map<String,dynamic> map, CaptchaSubmitInfoSerializer<CaptchaSerializedInfo, CaptchaInfo> serializer){
-    if(map['captcha_info'] != null && map['captcha_info'] is CaptchaSerializedInfo){
-      return serializer.fromSerialized(map['captcha_info']);
-    }else{
-      throw InteractivePlusSystemException.SERIALIZATION_EXCEPTION;
-    }
-  }
-  static CaptchaInfo fromMapWithSetting<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>(
+  
+  static ExchangeCaptchaRequiredRequest deserializeWithSetting<FineSetting extends InteractiveSSOExchangeSharedSetting>(
     Map<String,dynamic> map, 
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+    FineSetting sharedSettings
   ){
-    return fromMap(map, sharedSettings.captchaInfoSerializer);
+    return ExchangeCaptchaRequiredRequest(captchaInfo: sharedSettings.captchaInfoSerializer.fromDynamicSerialized(map['captcha_info']));
   }
 }

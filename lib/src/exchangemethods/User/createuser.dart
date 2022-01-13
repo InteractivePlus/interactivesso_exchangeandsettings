@@ -1,3 +1,4 @@
+import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
 import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/captcharequiredrequest.dart';
@@ -12,7 +13,7 @@ part 'createuser.g.dart';
 
 typedef CreateUserAPIRequestSerialized = Map<String,dynamic>;
 
-class CreateUserAPIRequest<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerialized>> implements InternationalilzedExchangeRequest, ExchangeCaptchaRequiredRequest<CaptchaSerialized, CaptchaInfo>{
+class CreateUserAPIRequest<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerialized>> implements InternationalizedExchangeRequest, ExchangeCaptchaRequiredRequest<CaptchaSerialized, CaptchaInfo>{
   String username;
 
   String? email;
@@ -23,8 +24,6 @@ class CreateUserAPIRequest<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitI
 
   String? areaAlpha2Code;
 
-  String? localeCode;
-
   @override
   CaptchaInfo captchaInfo;
 
@@ -32,19 +31,18 @@ class CreateUserAPIRequest<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitI
   String? preferredLocale;
 
   CreateUserAPIRequest({
-    String? preferredLocale,
+    this.preferredLocale,
     required this.username,
     this.email,
     this.phoneNumber,
     required this.password,
     this.areaAlpha2Code,
-    this.localeCode,
     required this.captchaInfo
   });
 
-  static Map<String,dynamic> staticSerialize<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>(
-    CreateUserAPIRequest<CaptchaSerializedInfo, CaptchaInfo> request, 
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+  static Map<String,dynamic> staticSerializeWithSettings<FineSetting extends InteractiveSSOExchangeSharedSetting>(
+    CreateUserAPIRequest request, 
+    FineSetting sharedSettings
   ){
     Map<String,dynamic> retMap = {
       'username': request.username,
@@ -60,44 +58,29 @@ class CreateUserAPIRequest<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitI
     if(request.areaAlpha2Code != null){
       retMap['area'] = request.areaAlpha2Code;
     }
-    if(request.localeCode != null){
-      retMap['locale'] = request.localeCode;
-    }
     if(request.preferredLocale != null){
       retMap['preferred_locale'] = request.preferredLocale;
     }
     return retMap;
   }
 
-  static Map<String,dynamic> staticSerializeGeneral<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>(
-    CreateUserAPIRequest request, 
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
-  ){
-    if(request is CreateUserAPIRequest<CaptchaSerializedInfo, CaptchaInfo>){
-      return staticSerialize(request, sharedSettings);
-    }else{
-      throw InteractivePlusSystemException.SERIALIZATION_EXCEPTION;
-    }
-  }
-
-  static CreateUserAPIRequest<CaptchaSerializedInfo, CaptchaInfo> staticDeserialize<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>(
+  static CreateUserAPIRequest staticDeserializeWithSettings<FineSetting extends InteractiveSSOExchangeSharedSetting>(
     Map<String,dynamic> serialized, 
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+    FineSetting sharedSettings
   ){
-    return CreateUserAPIRequest<CaptchaSerializedInfo, CaptchaInfo>(
+    return CreateUserAPIRequest(
       username: serialized['username'] as String, 
       password: serialized['password'] as String, 
       captchaInfo: sharedSettings.captchaInfoSerializer.fromDynamicSerialized(serialized['captcha_info']),
       preferredLocale: serialized['preferred_locale'] as String?,
       email: serialized['email'] as String?,
       phoneNumber: NullablePhoneNumberConverter().fromJson(serialized['phone'] as String?),
-      areaAlpha2Code: serialized['area'] as String?,
-      localeCode: serialized['locale'] as String?
+      areaAlpha2Code: serialized['area'] as String?
     );
   }
-  static List<String>? validate<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>(
+  static List<String>? validate<FineSetting extends InteractiveSSOExchangeSharedSetting>(
     CreateUserAPIRequest request, 
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+    FineSetting sharedSettings
   ){
     List<String> returnList = List.empty(growable: true);
     UserSystemValidators userSystemValidators = sharedSettings.validatorSettings.userSystemValidators;
@@ -121,7 +104,7 @@ class CreateUserAPIRequest<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitI
     if(!userSystemValidators.passwordFormatValidator.validate(request.password)){
       returnList.add('password');
     }
-    List<String>? internationalizedReturn = InternationalilzedExchangeRequest.validate(request, sharedSettings);
+    List<String>? internationalizedReturn = InternationalizedExchangeRequest.validateWithSettings(request, sharedSettings);
     if(internationalizedReturn != null){
       returnList.addAll(internationalizedReturn);
     }
@@ -154,14 +137,14 @@ class CreateUserSuccessResponse implements Serializable<Map<String,dynamic>>{
   static CreateUserSuccessResponse fromJson(Map<String,dynamic> json) => CreateUserSuccessResponse.fromMap(json);
   static CreateUserSuccessResponse? fromJsonNullable(Map<String,dynamic>? json) => json == null ? null : fromJson(json);
 
-  static Map<String,dynamic> staticSerialize<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>(
+  static Map<String,dynamic> staticSerialize<FineSetting extends InteractiveSSOExchangeSharedSetting>(
     CreateUserSuccessResponse res, 
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+    FineSetting sharedSettings
   ) => res.toJson();
 
-  static CreateUserSuccessResponse staticDeserialize<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>(
+  static CreateUserSuccessResponse staticDeserialize<FineSetting extends InteractiveSSOExchangeSharedSetting>(
     Map<String,dynamic> serialized, 
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+    FineSetting sharedSettings
   ) => CreateUserSuccessResponse.fromJson(serialized);
 
   @override
@@ -174,7 +157,7 @@ class CreateUserSuccessResponse implements Serializable<Map<String,dynamic>>{
 ///If there's something like email / phone / username already used, make sure you throw the appropriate exception with valid parameters.
 ///This also causes the backend to send verification codes to the user, the user can verify their email / phone using the verification code
 ///After finishing registration, the frontend should prompt the user to enter verification code for phone and email.
-final ExchangeFormat<CreateUserAPIRequest, CreateUserSuccessResponse, void, Map<String,dynamic>, Map<String,dynamic>, void> createUserAPI = 
+final InteractiveSSOExchangeFormat<CreateUserAPIRequest, CreateUserSuccessResponse, void, Map<String,dynamic>, Map<String,dynamic>, void> createUserAPI = 
 ExchangeFormat(
   exchangeProtocolName: 'createUserAPI', 
   rateLimitMetaData: const ExchangeRateLimitMetaData(
@@ -187,11 +170,11 @@ ExchangeFormat(
     relativePathWithParameterMarkedWithLtAndGtSymbols: '/user/<username>'
   ), 
   requireVerificationCode: false,
-  parseRequest: CreateUserAPIRequest.staticDeserialize, 
-  serializeRequest: CreateUserAPIRequest.staticSerializeGeneral, 
+  parseRequest: CreateUserAPIRequest.staticDeserializeWithSettings, 
+  serializeRequest: CreateUserAPIRequest.staticSerializeWithSettings, 
   validateRequest: CreateUserAPIRequest.validate,
   parseSuccessResponseData: CreateUserSuccessResponse.staticDeserialize, 
-  parseFailedResponseData: exchangeVoidToVoidFunction, 
+  parseFailedResponseData: ssoExchangeVoidToVoidFunc, 
   serializeSuccessResponseData: CreateUserSuccessResponse.staticSerialize, 
-  serializeFailedResponseData: exchangeVoidToVoidFunction
+  serializeFailedResponseData: ssoExchangeVoidToVoidFunc
 );

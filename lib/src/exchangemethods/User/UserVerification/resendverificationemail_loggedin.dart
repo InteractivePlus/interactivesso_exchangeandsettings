@@ -1,7 +1,8 @@
+import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedtoken.dart';
 import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 
-ExchangeFormat<ExchangeUserTokenRequiredRequest, void, void, Map<String,dynamic>, void, void> resendVerificationEmail_LoggedIn_API = ExchangeFormat(
+InteractiveSSOExchangeFormat<ExchangeUserTokenRequiredRequest, void, void, Map<String,dynamic>, void, void> resendVerificationEmail_LoggedIn_API = InteractiveSSOExchangeFormat(
   exchangeProtocolName: 'resendVerificationEmail_LoggedIn_API', 
   httpMetaData: const ExchangeHTTPMetaData(
     method: ExchangeHTTPMethod.POST, 
@@ -13,11 +14,11 @@ ExchangeFormat<ExchangeUserTokenRequiredRequest, void, void, Map<String,dynamic>
     numRequestPerIPPerMin: 5,
     numRequestPerUserPerMin: 1
   ), 
-  parseRequest: ExchangeUserTokenRequiredRequest.staticDeserialize, 
-  serializeRequest: ExchangeUserTokenRequiredRequest.staticSerialize, 
-  parseSuccessResponseData: exchangeVoidToVoidFunction, 
-  parseFailedResponseData: exchangeVoidToVoidFunction, 
-  serializeSuccessResponseData: exchangeVoidToVoidFunction, 
-  serializeFailedResponseData: exchangeVoidToVoidFunction, 
+  parseRequest: ExchangeUserTokenRequiredRequest.staticDeserializeWithSettings, 
+  serializeRequest: ExchangeUserTokenRequiredRequest.staticSerializeWithSettings, 
+  parseSuccessResponseData: ssoExchangeVoidToVoidFunc, 
+  parseFailedResponseData: ssoExchangeVoidToVoidFunc, 
+  serializeSuccessResponseData: ssoExchangeVoidToVoidFunc, 
+  serializeFailedResponseData: ssoExchangeVoidToVoidFunc, 
   requireVerificationCode: false
 );

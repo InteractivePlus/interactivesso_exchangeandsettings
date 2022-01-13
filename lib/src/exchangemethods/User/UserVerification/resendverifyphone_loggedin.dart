@@ -1,3 +1,4 @@
+import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
 import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedtoken.dart';
@@ -33,20 +34,23 @@ class ResendVerifyPhoneLoggedInRequest extends ExchangeUserTokenRequiredRequest 
   @override
   Map<String, dynamic> toJson() => serialize(null);
 
-  static Map<String,dynamic> staticSerialize<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
+  static Map<String,dynamic> staticSerialize
   (
-    ResendVerifyPhoneLoggedInRequest req,
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+    ResendVerifyPhoneLoggedInRequest req
   ) => req.toJson();
-  static ResendVerifyPhoneLoggedInRequest staticDeserialize<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
+
+  static final staticSerializeWithSettings = ssoConvertToExchangeFormatFunc(staticSerialize);
+
+  static ResendVerifyPhoneLoggedInRequest staticDeserialize
   (
     Map<String,dynamic> reqSerialized,
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
   ) => ResendVerifyPhoneLoggedInRequest.fromMap(reqSerialized);
-  static List<String>? validate<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
+  static final staticDeserializeWithSettings = ssoConvertToExchangeFormatFunc(staticDeserialize);
+
+  static List<String>? validate<FineSetting extends InteractiveSSOExchangeSharedSetting>
   (
     ResendVerifyPhoneLoggedInRequest req,
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+    FineSetting sharedSettings
   ){
     if(req.preferredCommunicationMethod != null && req.preferredCommunicationMethod!.verifyTarget != PhoneOrEmail.phone){
       return ['preferred_method'];
@@ -56,7 +60,7 @@ class ResendVerifyPhoneLoggedInRequest extends ExchangeUserTokenRequiredRequest 
   }
 }
 
-ExchangeFormat<ResendVerifyPhoneLoggedInRequest, void, void, Map<String,dynamic>, void, void> resendVerifyPhone_LoggedIn_API = ExchangeFormat(
+InteractiveSSOExchangeFormat<ResendVerifyPhoneLoggedInRequest, void, void, Map<String,dynamic>, void, void> resendVerifyPhone_LoggedIn_API = InteractiveSSOExchangeFormat(
   exchangeProtocolName: 'resendVerifyPhone_LoggedIn_API', 
   httpMetaData: const ExchangeHTTPMetaData(
     method: ExchangeHTTPMethod.POST, 
@@ -68,11 +72,11 @@ ExchangeFormat<ResendVerifyPhoneLoggedInRequest, void, void, Map<String,dynamic>
     numRequestPerIPPerMin: 5,
     numRequestPerUserPerMin: 1
   ), 
-  parseRequest: ResendVerifyPhoneLoggedInRequest.staticDeserialize, 
-  serializeRequest: ResendVerifyPhoneLoggedInRequest.staticSerialize, 
-  parseSuccessResponseData: exchangeVoidToVoidFunction, 
-  parseFailedResponseData: exchangeVoidToVoidFunction, 
-  serializeSuccessResponseData: exchangeVoidToVoidFunction, 
-  serializeFailedResponseData: exchangeVoidToVoidFunction, 
+  parseRequest: ResendVerifyPhoneLoggedInRequest.staticDeserializeWithSettings, 
+  serializeRequest: ResendVerifyPhoneLoggedInRequest.staticSerializeWithSettings, 
+  parseSuccessResponseData: ssoExchangeVoidToVoidFunc, 
+  parseFailedResponseData: ssoExchangeVoidToVoidFunc, 
+  serializeSuccessResponseData: ssoExchangeVoidToVoidFunc, 
+  serializeFailedResponseData: ssoExchangeVoidToVoidFunc, 
   requireVerificationCode: false
 );

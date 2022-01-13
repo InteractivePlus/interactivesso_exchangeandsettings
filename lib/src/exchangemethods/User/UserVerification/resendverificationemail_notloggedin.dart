@@ -1,3 +1,4 @@
+import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
 import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/captcharequiredrequest.dart';
@@ -18,45 +19,33 @@ class ResendVerificationEmailNotLoggedInRequest<CaptchaSerialized, CaptchaInfo e
     required this.captchaInfo
   });
 
-  static Map<String,dynamic> staticSerializeWithSettings<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
+  static Map<String,dynamic> staticSerializeWithSettings<FineSetting extends InteractiveSSOExchangeSharedSetting>
   (
-    ResendVerificationEmailNotLoggedInRequest<CaptchaSerializedInfo, CaptchaInfo> req,
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+    ResendVerificationEmailNotLoggedInRequest req,
+    FineSetting sharedSettings
   ){
     Map<String,dynamic> retMap = {
       'user_unique_id': req.userUniqueId,
       'password': req.password
     };
-    ExchangeCaptchaRequiredRequest.appendSerialize(retMap, req, sharedSettings.captchaInfoSerializer);
+    ExchangeCaptchaRequiredRequest.appendSerializeWithSetting(retMap, req, sharedSettings);
     return retMap;
   }
-
-  static Map<String,dynamic> staticSerializeWithSettingsGeneral<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
-  (
-    ResendVerificationEmailNotLoggedInRequest req,
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
-  ){
-    if(req is ResendVerificationEmailNotLoggedInRequest<CaptchaSerializedInfo, CaptchaInfo>){
-      return staticSerializeWithSettings(req, sharedSettings);
-    }else{
-      throw InteractivePlusSystemException.SERIALIZATION_EXCEPTION;
-    }
-  }
   
-  static ResendVerificationEmailNotLoggedInRequest<CaptchaSerializedInfo, CaptchaInfo> staticDeserialize<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
+  static ResendVerificationEmailNotLoggedInRequest staticDeserializeWithSettings<FineSetting extends InteractiveSSOExchangeSharedSetting>
   (
     Map<String,dynamic> reqSerialized,
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+    FineSetting sharedSettings
   ) => ResendVerificationEmailNotLoggedInRequest(
     userUniqueId: reqSerialized['user_unique_id'] as String,
     password: reqSerialized['password'] as String,
     captchaInfo: sharedSettings.captchaInfoSerializer.fromDynamicSerialized(reqSerialized['captcha_info'])
   );
   
-  static List<String>? validate<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
+  static List<String>? validate<FineSetting extends InteractiveSSOExchangeSharedSetting>
   (
     ResendVerificationEmailNotLoggedInRequest req,
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+    FineSetting sharedSettings
   ){
     List<String>? retList = List.empty(growable: true);
     if(req.userUniqueId.isEmpty){
@@ -69,7 +58,7 @@ class ResendVerificationEmailNotLoggedInRequest<CaptchaSerialized, CaptchaInfo e
   }
 }
 
-final ExchangeFormat<ResendVerificationEmailNotLoggedInRequest, void, void, Map<String,dynamic>, void, void> resendVerificationEmail_NotLoggedIn_API = ExchangeFormat(
+final InteractiveSSOExchangeFormat<ResendVerificationEmailNotLoggedInRequest, void, void, Map<String,dynamic>, void, void> resendVerificationEmail_NotLoggedIn_API = InteractiveSSOExchangeFormat(
   exchangeProtocolName: 'resendVerificationEmail_NotLoggedIn_API', 
   httpMetaData: const ExchangeHTTPMetaData(
     method: ExchangeHTTPMethod.POST, 
@@ -81,12 +70,12 @@ final ExchangeFormat<ResendVerificationEmailNotLoggedInRequest, void, void, Map<
     numRequestPerIPPerMin: 5,
     numRequestPerUserPerMin: 2
   ), 
-  parseRequest: ResendVerificationEmailNotLoggedInRequest.staticDeserialize, 
-  serializeRequest: ResendVerificationEmailNotLoggedInRequest.staticSerializeWithSettingsGeneral, 
+  parseRequest: ResendVerificationEmailNotLoggedInRequest.staticDeserializeWithSettings, 
+  serializeRequest: ResendVerificationEmailNotLoggedInRequest.staticSerializeWithSettings, 
   validateRequest: ResendVerificationEmailNotLoggedInRequest.validate,
-  parseSuccessResponseData: exchangeVoidToVoidFunction, 
-  parseFailedResponseData: exchangeVoidToVoidFunction, 
-  serializeSuccessResponseData: exchangeVoidToVoidFunction, 
-  serializeFailedResponseData: exchangeVoidToVoidFunction, 
+  parseSuccessResponseData: ssoExchangeVoidToVoidFunc, 
+  parseFailedResponseData: ssoExchangeVoidToVoidFunc, 
+  serializeSuccessResponseData: ssoExchangeVoidToVoidFunc, 
+  serializeFailedResponseData: ssoExchangeVoidToVoidFunc, 
   requireVerificationCode: false
 );

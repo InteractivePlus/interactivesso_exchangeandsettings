@@ -1,3 +1,4 @@
+import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
 import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/captcharequiredrequest.dart';
@@ -30,9 +31,9 @@ class UserLoginAPIRequest<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitIn
     required this.password
   });
 
-  static Map<String,dynamic> serializeStaticWithSettings<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerialized>>(
-    UserLoginAPIRequest<CaptchaSerialized, CaptchaInfo> req,
-    InteractiveSSOSharedSettings<CaptchaSerialized, CaptchaInfo> sharedSettings
+  static Map<String,dynamic> serializeStaticWithSettings<FineSetting extends InteractiveSSOExchangeSharedSetting>(
+    UserLoginAPIRequest req,
+    FineSetting sharedSettings
   ){
     Map<String,dynamic> retMap = {
       'password': req.password
@@ -46,24 +47,13 @@ class UserLoginAPIRequest<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitIn
     if(req.phoneNumber != null){
       retMap['phone'] = NullablePhoneNumberConverter().toJson(req.phoneNumber);
     }
-    ExchangeCaptchaRequiredRequest.appendSerialize(retMap, req, sharedSettings.captchaInfoSerializer);
+    ExchangeCaptchaRequiredRequest.appendSerializeWithSetting(retMap, req, sharedSettings);
     return retMap;
   }
 
-  static Map<String,dynamic> serializeStaticWithSettingsGeneral<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerialized>>(
-    UserLoginAPIRequest req,
-    InteractiveSSOSharedSettings<CaptchaSerialized, CaptchaInfo> sharedSettings
-  ){
-    if(req is UserLoginAPIRequest<CaptchaSerialized, CaptchaInfo>){
-      return serializeStaticWithSettings(req, sharedSettings);
-    }else{
-      throw InteractivePlusSystemException.SERIALIZATION_EXCEPTION;
-    }
-  }
-
-  static UserLoginAPIRequest<CaptchaSerialized, CaptchaInfo> deserializeStaticWithSettings<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerialized>>(
+  static UserLoginAPIRequest deserializeStaticWithSettings<FineSetting extends InteractiveSSOExchangeSharedSetting>(
     Map<String,dynamic> reqSerialized,
-    InteractiveSSOSharedSettings<CaptchaSerialized, CaptchaInfo> sharedSettings
+    FineSetting sharedSettings
   ) => UserLoginAPIRequest(
     captchaInfo: sharedSettings.captchaInfoSerializer.fromDynamicSerialized(reqSerialized['captcha_info']), 
     password: reqSerialized['password'] as String,
@@ -72,9 +62,9 @@ class UserLoginAPIRequest<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitIn
     email: reqSerialized['email'] as String?
   );
 
-  static List<String>? validate<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerialized>>(
+  static List<String>? validateWithSettings<FineSetting extends InteractiveSSOExchangeSharedSetting>(
     UserLoginAPIRequest req,
-    InteractiveSSOSharedSettings<CaptchaSerialized, CaptchaInfo> sharedSettings
+    FineSetting sharedSettings
   ){
     List<String> retList = List.empty(growable: true);
     if(req.email != null && !sharedSettings.validatorSettings.userSystemValidators.emailValidator.validate(req.email!)){
@@ -134,8 +124,8 @@ class UserLoginSuccessfulAPIResponseData implements Serializable<Map<String,dyna
   static UserLoginSuccessfulAPIResponseData? fromJsonNullable(Map<String,dynamic>? json) => json == null ? null : fromJson(json);
   static Map<String,dynamic> staticSerialize(UserLoginSuccessfulAPIResponseData obj) => obj.serialize();
 
-  static final staticSerializeWithSettings = convertToExchangeFormatApplicableFunc(staticSerialize);
-  static final staticDeserializeWithSettings = convertToExchangeFormatApplicableFunc(fromJson);
+  static final staticSerializeWithSettings = ssoConvertToExchangeFormatFunc(staticSerialize);
+  static final staticDeserializeWithSettings = ssoConvertToExchangeFormatFunc(fromJson);
 
   @override
   Map<String, dynamic> serialize([String? locale]) => _$UserLoginSuccessfulAPIResponseDataToJson(this);
@@ -157,8 +147,8 @@ class UserLoginFailedAPIResponseData implements Serializable<Map<String,dynamic>
   static UserLoginFailedAPIResponseData? fromJsonNullable(Map<String,dynamic>? json) => json == null ? null : fromJson(json);
   static Map<String,dynamic> staticSerialize(UserLoginFailedAPIResponseData obj) => obj.serialize();
 
-  static final staticSerializeWithSettings = convertToExchangeFormatApplicableFunc(staticSerialize);
-  static final staticDeserializeWithSettings = convertToExchangeFormatApplicableFunc(fromJson);
+  static final staticSerializeWithSettings = ssoConvertToExchangeFormatFunc(staticSerialize);
+  static final staticDeserializeWithSettings = ssoConvertToExchangeFormatFunc(fromJson);
 
   @override
   Map<String, dynamic> serialize([String? locale]) => _$UserLoginFailedAPIResponseDataToJson(this);
@@ -167,7 +157,7 @@ class UserLoginFailedAPIResponseData implements Serializable<Map<String,dynamic>
   Map<String, dynamic> toJson() => serialize(null);
 }
 
-ExchangeFormat<UserLoginAPIRequest, UserLoginSuccessfulAPIResponseData, UserLoginFailedAPIResponseData, Map<String,dynamic>, Map<String,dynamic>, Map<String,dynamic>> userLoginAPI = ExchangeFormat(
+InteractiveSSOExchangeFormat<UserLoginAPIRequest, UserLoginSuccessfulAPIResponseData, UserLoginFailedAPIResponseData, Map<String,dynamic>, Map<String,dynamic>, Map<String,dynamic>> userLoginAPI = ExchangeFormat(
   exchangeProtocolName: 'userLoginAPI', 
   httpMetaData: const ExchangeHTTPMetaData(
     method: ExchangeHTTPMethod.POST, 
@@ -180,8 +170,8 @@ ExchangeFormat<UserLoginAPIRequest, UserLoginSuccessfulAPIResponseData, UserLogi
     numRequestPerUserPerMin: 4
   ), 
   parseRequest: UserLoginAPIRequest.deserializeStaticWithSettings, 
-  serializeRequest: UserLoginAPIRequest.serializeStaticWithSettingsGeneral, 
-  validateRequest: UserLoginAPIRequest.validate,
+  serializeRequest: UserLoginAPIRequest.serializeStaticWithSettings, 
+  validateRequest: UserLoginAPIRequest.validateWithSettings,
   parseSuccessResponseData: UserLoginSuccessfulAPIResponseData.staticDeserializeWithSettings, 
   parseFailedResponseData: UserLoginFailedAPIResponseData.staticDeserializeWithSettings, 
   serializeSuccessResponseData: UserLoginSuccessfulAPIResponseData.staticSerializeWithSettings, 

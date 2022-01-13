@@ -1,7 +1,8 @@
+import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/vericoderequiredrequest.dart';
 import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 
-ExchangeFormat<ExchangedVerificationCodeRequiredRequest,void,void,Map<String,dynamic>,void,void> verifyUserPhoneAPI = ExchangeFormat(
+InteractiveSSOExchangeFormat<ExchangedVerificationCodeRequiredRequest,void,void,Map<String,dynamic>,void,void> verifyUserPhoneAPI = ExchangeFormat(
   exchangeProtocolName: 'verifyUserPhoneAPI', 
   httpMetaData: const ExchangeHTTPMetaData(
     method: ExchangeHTTPMethod.GET, 
@@ -15,11 +16,11 @@ ExchangeFormat<ExchangedVerificationCodeRequiredRequest,void,void,Map<String,dyn
   ), 
   parseRequest: ExchangedVerificationCodeRequiredRequest.staticDeserializeWithSetting, 
   serializeRequest: ExchangedVerificationCodeRequiredRequest.staticSerializeWithSetting,
-  validateRequest: ExchangedVerificationCodeRequiredRequest.validateWithSetting, 
-  parseSuccessResponseData: exchangeVoidToVoidFunction, 
-  parseFailedResponseData: exchangeVoidToVoidFunction, 
-  serializeSuccessResponseData: exchangeVoidToVoidFunction, 
-  serializeFailedResponseData: exchangeVoidToVoidFunction, 
+  validateRequest: ExchangedVerificationCodeRequiredRequest.validateWithSettings, 
+  parseSuccessResponseData: ssoExchangeVoidToVoidFunc, 
+  parseFailedResponseData: ssoExchangeVoidToVoidFunc, 
+  serializeSuccessResponseData: ssoExchangeVoidToVoidFunc, 
+  serializeFailedResponseData: ssoExchangeVoidToVoidFunc, 
   requireVerificationCode: true,
   requiredVerificationCodeScope: 'verifyUserPhoneAPI'
 );

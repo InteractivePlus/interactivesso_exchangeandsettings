@@ -1,6 +1,6 @@
 import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
-import 'package:interactivesso_exchangeandsettings/src/setting_objects/sharedsettings.dart';
+import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'returnedtoken.g.dart';
@@ -53,17 +53,19 @@ class ExchangeUserTokenRequiredRequest{
 
   ExchangeUserTokenRequiredRequest({required this.userAccessToken, required this.userUniqueId});
 
-  static Map<String,dynamic> staticSerialize<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
+  static Map<String,dynamic> staticSerialize
   (
-    ExchangeUserTokenRequiredRequest request,
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+    ExchangeUserTokenRequiredRequest request
   ) => _$ExchangeUserTokenRequiredRequestToJson(request);
 
-  static ExchangeUserTokenRequiredRequest staticDeserialize<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
+  static final staticSerializeWithSettings = ssoConvertToExchangeFormatFunc(staticSerialize);
+
+  static ExchangeUserTokenRequiredRequest staticDeserialize
   (
     Map<String,dynamic> map,
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
   ) => _$ExchangeUserTokenRequiredRequestFromJson(map);
+
+  static final staticDeserializeWithSettings = ssoConvertToExchangeFormatFunc(staticDeserialize);
 
   static void appendSerialize(Map<String,dynamic> appendTo, ExchangeUserTokenRequiredRequest request){
     appendTo['user_access_token'] = request.userAccessToken;
@@ -80,17 +82,17 @@ class ExchangeUserRefreshTokenRequiredRequest{
 
   ExchangeUserRefreshTokenRequiredRequest({required this.userRefreshToken, required this.userUniqueId});
 
-  static Map<String,dynamic> staticSerialize<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
+  static Map<String,dynamic> staticSerialize
   (
-    ExchangeUserRefreshTokenRequiredRequest request,
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+    ExchangeUserRefreshTokenRequiredRequest request
   ) => _$ExchangeUserRefreshTokenRequiredRequestToJson(request);
+  static final staticSerializeWithSettings = ssoConvertToExchangeFormatFunc(staticSerialize);
 
-  static ExchangeUserRefreshTokenRequiredRequest staticDeserialize<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
+  static ExchangeUserRefreshTokenRequiredRequest staticDeserialize
   (
-    Map<String,dynamic> map,
-    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+    Map<String,dynamic> map
   ) => _$ExchangeUserRefreshTokenRequiredRequestFromJson(map);
+  static final staticDeserializeWithSettings = ssoConvertToExchangeFormatFunc(staticDeserialize);
 
   static void appendSerialize(Map<String,dynamic> appendTo, ExchangeUserRefreshTokenRequiredRequest request){
     appendTo['user_refresh_token'] = request.userRefreshToken;
