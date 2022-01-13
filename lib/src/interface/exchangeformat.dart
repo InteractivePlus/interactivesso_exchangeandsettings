@@ -97,6 +97,8 @@ void exchangeVoidToVoidFunction<CaptchaSerializedInfo,CaptchaInfo extends Captch
 class ExchangeFormat<Request, ResponseDataSuccess, ResponseDataFailed, RequestSerialized, ResponseDataSuccessSerialized, ResponseDataFailedSerialized>{
   final String exchangeProtocolName;
   final ExchangeHTTPMetaData httpMetaData;
+  final bool requireVerificationCode;
+  final String? requiredVerificationCodeScope;
   
   final Request Function<CaptchaInfoSerialized, CaptchaInfo extends CaptchaSubmitInfo<CaptchaInfoSerialized>>(RequestSerialized serialized, InteractiveSSOSharedSettings<CaptchaInfoSerialized,CaptchaInfo> sharedSettings) parseRequest;
   final RequestSerialized Function<CaptchaInfoSerialized, CaptchaInfo extends CaptchaSubmitInfo<CaptchaInfoSerialized>>(Request req, InteractiveSSOSharedSettings<CaptchaInfoSerialized, CaptchaInfo> sharedSettings) serializeRequest;
@@ -122,6 +124,8 @@ class ExchangeFormat<Request, ResponseDataSuccess, ResponseDataFailed, RequestSe
     required this.parseFailedResponseData,
     required this.serializeSuccessResponseData,
     required this.serializeFailedResponseData,
+    required this.requireVerificationCode,
+    this.requiredVerificationCodeScope,
     this.validateResponseDataSuccess,
     this.validateResponseDataFailed
   });

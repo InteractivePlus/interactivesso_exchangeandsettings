@@ -173,9 +173,10 @@ ExchangeFormat(
   httpMetaData: const ExchangeHTTPMetaData(
     method: ExchangeHTTPMethod.POST, 
     successfulHTTPCode: 201, 
-    possibleHTTPCodes: [201, 400, 409], 
+    possibleHTTPCodes: [201, 400, 409, 500], 
     relativePathWithParameterMarkedWithLtAndGtSymbols: '/user/<username>'
   ), 
+  requireVerificationCode: false,
   parseRequest: CreateUserAPIRequest.staticDeserialize, 
   serializeRequest: CreateUserAPIRequest.staticSerializeGeneral, 
   validateRequest: CreateUserAPIRequest.validate,
