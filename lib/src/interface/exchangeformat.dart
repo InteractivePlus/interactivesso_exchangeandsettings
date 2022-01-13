@@ -22,8 +22,8 @@ class ExchangeResponse<SuccessData, FailData>{
   ){
     return ExchangeResponse<SuccessData, FailedData>(
       exception: InteractivePlusSystemException.fromJsonNullable(map['exception']),
-      data: map['data'] == null ? null : successDataDeserializer(map['data']),
-      failData: map['failed_data'] == null ? null : failedDataDeserializer(map['failed_data'])
+      data: map['data'] == null ? null : successDataDeserializer(map['data'] as SuccessDataSerialized),
+      failData: map['failed_data'] == null ? null : failedDataDeserializer(map['failed_data'] as FailedDataSerialized)
     );
   }
   static Map<String,dynamic> serialize<SuccessData, FailedData, SuccessDataSerialized, FailedDataSerialized>(
@@ -66,6 +66,7 @@ class InternationalilzedExchangeRequest{
   }
 }
 
+@JsonEnum()
 enum ExchangeHTTPMethod{
   GET,
   POST,
@@ -74,7 +75,8 @@ enum ExchangeHTTPMethod{
   PATCH
 }
 
-class ExchangeHTTPMetaData{
+@JsonSerializable()
+class ExchangeHTTPMetaData implements Serializable<Map<String,dynamic>>{
   final int successfulHTTPCode;
   final List<int> possibleHTTPCodes;
   final String relativePathWithParameterMarkedWithLtAndGtSymbols;
@@ -85,6 +87,39 @@ class ExchangeHTTPMetaData{
     required this.possibleHTTPCodes,
     required this.relativePathWithParameterMarkedWithLtAndGtSymbols
   });
+  factory ExchangeHTTPMetaData.fromMap(Map<String,dynamic> map) => _$ExchangeHTTPMetaDataFromJson(map);
+  static ExchangeHTTPMetaData fromJson(Map<String,dynamic> json) => ExchangeHTTPMetaData.fromMap(json);
+  static ExchangeHTTPMetaData? fromJsonNullable(Map<String,dynamic>? json) => json == null ? null : fromJson(json);
+  
+  @override
+  Map<String, dynamic> serialize([String? locale]) => _$ExchangeHTTPMetaDataToJson(this);
+
+  @override
+  Map<String, dynamic> toJson() => serialize(null);
+}
+
+@JsonSerializable()
+class ExchangeRateLimitMetaData implements Serializable<Map<String,dynamic>>{
+  final int? numRequestPerIPPerMin;
+  final int? numRequestPerUserPerMin;
+  final int? numRequestPerAPPPerMin;
+  final int? numRequestPerOAuthTokenPerMin;
+
+  const ExchangeRateLimitMetaData({
+    this.numRequestPerIPPerMin,
+    this.numRequestPerAPPPerMin,
+    this.numRequestPerUserPerMin,
+    this.numRequestPerOAuthTokenPerMin
+  });
+  factory ExchangeRateLimitMetaData.fromMap(Map<String,dynamic> map) => _$ExchangeRateLimitMetaDataFromJson(map);
+  static ExchangeRateLimitMetaData fromJson(Map<String,dynamic> json) => ExchangeRateLimitMetaData.fromMap(json);
+  static ExchangeRateLimitMetaData? fromJsonNullable(Map<String,dynamic>? json) => json == null ? null : fromJson(json);
+  
+  @override
+  Map<String, dynamic> serialize([String? locale]) => _$ExchangeRateLimitMetaDataToJson(this);
+
+  @override
+  Map<String, dynamic> toJson() => serialize(null);
 }
 
 void exchangeVoidToVoidFunction<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>(
@@ -94,9 +129,17 @@ void exchangeVoidToVoidFunction<CaptchaSerializedInfo,CaptchaInfo extends Captch
   return;
 }
 
+ReturnType Function<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>(FirstVarType i, InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings) convertToExchangeFormatApplicableFunc<ReturnType, FirstVarType>(ReturnType Function(FirstVarType firstVar) func){
+  return <CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>(
+    FirstVarType i, 
+    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+  ) => func(i);
+}
+
 class ExchangeFormat<Request, ResponseDataSuccess, ResponseDataFailed, RequestSerialized, ResponseDataSuccessSerialized, ResponseDataFailedSerialized>{
   final String exchangeProtocolName;
   final ExchangeHTTPMetaData httpMetaData;
+  final ExchangeRateLimitMetaData rateLimitMetaData;
   final bool requireVerificationCode;
   final String? requiredVerificationCodeScope;
   
@@ -117,6 +160,7 @@ class ExchangeFormat<Request, ResponseDataSuccess, ResponseDataFailed, RequestSe
   ExchangeFormat({
     required this.exchangeProtocolName,
     required this.httpMetaData,
+    required this.rateLimitMetaData,
     required this.parseRequest,
     required this.serializeRequest,
     this.validateRequest,

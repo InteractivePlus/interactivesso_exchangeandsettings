@@ -1,6 +1,7 @@
 import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/captcharequiredrequest.dart';
+import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returneduserentity.dart';
 import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 import 'package:interactivesso_exchangeandsettings/src/setting_objects/sharedsettings.dart';
 import 'package:interactivesso_exchangeandsettings/src/setting_objects/validatorsbysystem/usersystem.dart';
@@ -140,7 +141,11 @@ class CreateUserSuccessResponse implements Serializable<Map<String,dynamic>>{
   @JsonKey(name: 'email_sent_method', fromJson: CommunicationMethod.fromJsonNullable, toJson: Serializable.convertToDynamicSerializedWithNullable)
   CommunicationMethod? emailVerificationMethod;
 
+  @JsonKey(required:true, name: 'created_user')
+  ExchangedUserEntity createdUserInfo;
+
   CreateUserSuccessResponse({
+    required this.createdUserInfo,
     this.phoneVerificationMethod,
     this.emailVerificationMethod
   });
@@ -167,9 +172,14 @@ class CreateUserSuccessResponse implements Serializable<Map<String,dynamic>>{
 }
 
 ///If there's something like email / phone / username already used, make sure you throw the appropriate exception with valid parameters.
-final ExchangeFormat<CreateUserAPIRequest, CreateUserSuccessResponse, void, Map<String,dynamic>, Map<String,dynamic>, void> CreateUserAPI = 
+///This also causes the backend to send verification codes to the user, the user can verify their email / phone using the verification code
+///After finishing registration, the frontend should prompt the user to enter verification code for phone and email.
+final ExchangeFormat<CreateUserAPIRequest, CreateUserSuccessResponse, void, Map<String,dynamic>, Map<String,dynamic>, void> createUserAPI = 
 ExchangeFormat(
   exchangeProtocolName: 'createUserAPI', 
+  rateLimitMetaData: const ExchangeRateLimitMetaData(
+    numRequestPerIPPerMin: 5
+  ),
   httpMetaData: const ExchangeHTTPMetaData(
     method: ExchangeHTTPMethod.POST, 
     successfulHTTPCode: 201, 

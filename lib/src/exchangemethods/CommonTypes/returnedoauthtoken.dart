@@ -77,7 +77,7 @@ class ExchangeOAuthTokenRequiredRequest{
     InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
   ) => _$ExchangeOAuthTokenRequiredRequestToJson(request);
 
-  static ExchangeOAuthTokenRequiredRequest fromJson<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
+  static ExchangeOAuthTokenRequiredRequest staticDeserialize<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
   (
     Map<String,dynamic> map,
     InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
@@ -107,7 +107,7 @@ class ExchangeOAuthRefreshTokenRequiredRequest{
     InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
   ) => _$ExchangeOAuthRefreshTokenRequiredRequestToJson(request);
 
-  static ExchangeOAuthRefreshTokenRequiredRequest fromJson<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
+  static ExchangeOAuthRefreshTokenRequiredRequest staticDeserialize<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
   (
     Map<String,dynamic> map,
     InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
