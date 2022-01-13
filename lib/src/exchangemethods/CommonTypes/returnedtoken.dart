@@ -67,6 +67,7 @@ class ExchangeUserTokenRequiredRequest{
 
   static void appendSerialize(Map<String,dynamic> appendTo, ExchangeUserTokenRequiredRequest request){
     appendTo['user_access_token'] = request.userAccessToken;
+    appendTo['user_unique_id'] = request.userUniqueId;
   }
 }
 
@@ -93,5 +94,6 @@ class ExchangeUserRefreshTokenRequiredRequest{
 
   static void appendSerialize(Map<String,dynamic> appendTo, ExchangeUserRefreshTokenRequiredRequest request){
     appendTo['user_refresh_token'] = request.userRefreshToken;
+    appendTo['user_unique_id'] = request.userUniqueId;
   }
 }

@@ -1,34 +1,34 @@
 import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
+import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/captcharequiredrequest.dart';
 import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 import 'package:interactivesso_exchangeandsettings/src/setting_objects/sharedsettings.dart';
 import 'package:interactivesso_exchangeandsettings/src/setting_objects/validatorsbysystem/usersystem.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 
 part 'createuser.g.dart';
 
 typedef CreateUserAPIRequestSerialized = Map<String,dynamic>;
 
-@JsonSerializable(includeIfNull: false)
-class CreateUserAPIRequest extends InternationalilzedExchangeRequest implements Serializable<Map<String,dynamic>>{
-  @JsonKey(required: true, name: 'username')
+class CreateUserAPIRequest<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerialized>> implements InternationalilzedExchangeRequest, ExchangeCaptchaRequiredRequest<CaptchaSerialized, CaptchaInfo>{
   String username;
 
-  @JsonKey(name: 'email')
   String? email;
 
-  @JsonKey(name: 'phone')
-  @NullablePhoneNumberConverter()
-  String? phoneNumber;
+  PhoneNumber? phoneNumber;
 
-  @JsonKey(required:true, name: 'password')
   String password;
 
-  @JsonKey(name: 'area')
   String? areaAlpha2Code;
 
-  @JsonKey(name: 'locale')
   String? localeCode;
+
+  @override
+  CaptchaInfo captchaInfo;
+
+  @override
+  String? preferredLocale;
 
   CreateUserAPIRequest({
     String? preferredLocale,
@@ -37,21 +37,63 @@ class CreateUserAPIRequest extends InternationalilzedExchangeRequest implements 
     this.phoneNumber,
     required this.password,
     this.areaAlpha2Code,
-    this.localeCode
-  }) : super(preferredLocale: preferredLocale);
-
-  factory CreateUserAPIRequest.fromMap(Map<String,dynamic> map) => _$CreateUserAPIRequestFromJson(map);
-  static CreateUserAPIRequest fromJson(Map<String,dynamic> json) => CreateUserAPIRequest.fromMap(json);
-  static CreateUserAPIRequest? fromJsonNullable(Map<String,dynamic>? json) => json == null ? null : fromJson(json);
+    this.localeCode,
+    required this.captchaInfo
+  });
 
   static Map<String,dynamic> staticSerialize<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>(
+    CreateUserAPIRequest<CaptchaSerializedInfo, CaptchaInfo> request, 
+    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+  ){
+    Map<String,dynamic> retMap = {
+      'username': request.username,
+      'password': request.password,
+      'captcha_info': sharedSettings.captchaInfoSerializer.serialize(request.captchaInfo)
+    };
+    if(request.email != null){
+      retMap['email'] = request.email;
+    }
+    if(request.phoneNumber != null){
+      retMap['phone'] = NullablePhoneNumberConverter().toJson(request.phoneNumber);
+    }
+    if(request.areaAlpha2Code != null){
+      retMap['area'] = request.areaAlpha2Code;
+    }
+    if(request.localeCode != null){
+      retMap['locale'] = request.localeCode;
+    }
+    if(request.preferredLocale != null){
+      retMap['preferred_locale'] = request.preferredLocale;
+    }
+    return retMap;
+  }
+
+  static Map<String,dynamic> staticSerializeGeneral<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>(
     CreateUserAPIRequest request, 
     InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
-  ) => request.serialize();
-  static CreateUserAPIRequest staticDeserialize<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>(
+  ){
+    if(request is CreateUserAPIRequest<CaptchaSerializedInfo, CaptchaInfo>){
+      return staticSerialize(request, sharedSettings);
+    }else{
+      throw InteractivePlusSystemException.SERIALIZATION_EXCEPTION;
+    }
+  }
+
+  static CreateUserAPIRequest<CaptchaSerializedInfo, CaptchaInfo> staticDeserialize<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>(
     Map<String,dynamic> serialized, 
     InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
-  ) => CreateUserAPIRequest.fromMap(serialized);
+  ){
+    return CreateUserAPIRequest<CaptchaSerializedInfo, CaptchaInfo>(
+      username: serialized['username'] as String, 
+      password: serialized['password'] as String, 
+      captchaInfo: sharedSettings.captchaInfoSerializer.fromDynamicSerialized(serialized['captcha_info']),
+      preferredLocale: serialized['preferred_locale'] as String?,
+      email: serialized['email'] as String?,
+      phoneNumber: NullablePhoneNumberConverter().fromJson(serialized['phone'] as String?),
+      areaAlpha2Code: serialized['area'] as String?,
+      localeCode: serialized['locale'] as String?
+    );
+  }
   static List<String>? validate<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>(
     CreateUserAPIRequest request, 
     InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
@@ -63,6 +105,17 @@ class CreateUserAPIRequest extends InternationalilzedExchangeRequest implements 
     }
     if(request.email != null && !userSystemValidators.emailValidator.validate(request.email!)){
       returnList.add('email');
+    }
+    if(request.phoneNumber != null && !request.phoneNumber!.validate()){
+      returnList.add('phone');
+    }
+    if(request.email == null && request.phoneNumber == null){
+      if(!returnList.contains('email')){
+        returnList.add('email');
+      }
+      if(!returnList.contains('phone')){
+        returnList.add('phone');
+      }
     }
     if(!userSystemValidators.passwordFormatValidator.validate(request.password)){
       returnList.add('password');
@@ -77,17 +130,44 @@ class CreateUserAPIRequest extends InternationalilzedExchangeRequest implements 
       return returnList;
     }
   }
+}
+
+@JsonSerializable(includeIfNull: false)
+class CreateUserSuccessResponse implements Serializable<Map<String,dynamic>>{
+  @JsonKey(name: 'phone_sent_method', fromJson: CommunicationMethod.fromJsonNullable, toJson: Serializable.convertToDynamicSerializedWithNullable)
+  CommunicationMethod? phoneVerificationMethod;
+
+  @JsonKey(name: 'email_sent_method', fromJson: CommunicationMethod.fromJsonNullable, toJson: Serializable.convertToDynamicSerializedWithNullable)
+  CommunicationMethod? emailVerificationMethod;
+
+  CreateUserSuccessResponse({
+    this.phoneVerificationMethod,
+    this.emailVerificationMethod
+  });
+
+  factory CreateUserSuccessResponse.fromMap(Map<String,dynamic> map) => _$CreateUserSuccessResponseFromJson(map);
+  static CreateUserSuccessResponse fromJson(Map<String,dynamic> json) => CreateUserSuccessResponse.fromMap(json);
+  static CreateUserSuccessResponse? fromJsonNullable(Map<String,dynamic>? json) => json == null ? null : fromJson(json);
+
+  static Map<String,dynamic> staticSerialize<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>(
+    CreateUserSuccessResponse res, 
+    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+  ) => res.toJson();
+
+  static CreateUserSuccessResponse staticDeserialize<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>(
+    Map<String,dynamic> serialized, 
+    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+  ) => CreateUserSuccessResponse.fromJson(serialized);
 
   @override
-  Map<String, dynamic> serialize([String? locale]) => _$CreateUserAPIRequestToJson(this);
+  Map<String, dynamic> serialize([String? locale]) => _$CreateUserSuccessResponseToJson(this);
 
   @override
   Map<String, dynamic> toJson() => serialize(null);
 }
 
-
 ///If there's something like email / phone / username already used, make sure you throw the appropriate exception with valid parameters.
-final ExchangeFormat<CreateUserAPIRequest, void, void, Map<String,dynamic>, void, void> CreateUserAPI = 
+final ExchangeFormat<CreateUserAPIRequest, CreateUserSuccessResponse, void, Map<String,dynamic>, Map<String,dynamic>, void> CreateUserAPI = 
 ExchangeFormat(
   exchangeProtocolName: 'createUserAPI', 
   httpMetaData: const ExchangeHTTPMetaData(
@@ -97,10 +177,10 @@ ExchangeFormat(
     relativePathWithParameterMarkedWithLtAndGtSymbols: '/user/<username>'
   ), 
   parseRequest: CreateUserAPIRequest.staticDeserialize, 
-  serializeRequest: CreateUserAPIRequest.staticSerialize, 
+  serializeRequest: CreateUserAPIRequest.staticSerializeGeneral, 
   validateRequest: CreateUserAPIRequest.validate,
-  parseSuccessResponseData: (obj, setting) => null, 
-  parseFailedResponseData: (obj, setting) => null, 
-  serializeSuccessResponseData: (obj, setting) => null, 
-  serializeFailedResponseData: (obj, setting) => null
+  parseSuccessResponseData: CreateUserSuccessResponse.staticDeserialize, 
+  parseFailedResponseData: exchangeVoidToVoidFunction, 
+  serializeSuccessResponseData: CreateUserSuccessResponse.staticSerialize, 
+  serializeFailedResponseData: exchangeVoidToVoidFunction
 );

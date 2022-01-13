@@ -18,6 +18,6 @@ dev_dependencies:
 dependencies: 
   characters: ^1.2.0
   interactiveplus_shared_dart: ^0.0.11
-  interactivesso_datatypes: ^0.0.6
+  interactivesso_datatypes: ^0.0.7
   json_annotation: ^4.4.0
   phone_numbers_parser: ^4.2.0

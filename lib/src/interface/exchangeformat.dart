@@ -52,9 +52,9 @@ class InternationalilzedExchangeRequest{
 
   InternationalilzedExchangeRequest({this.preferredLocale});
 
-  void appendSerialize(Map<String,dynamic> toAppendTo){
-    if(preferredLocale != null){
-      toAppendTo['preferred_locale'] = preferredLocale;
+  static void appendSerialize(Map<String,dynamic> toAppendTo, InternationalilzedExchangeRequest object){
+    if(object.preferredLocale != null){
+      toAppendTo['preferred_locale'] = object.preferredLocale;
     }
   }
 
@@ -85,6 +85,13 @@ class ExchangeHTTPMetaData{
     required this.possibleHTTPCodes,
     required this.relativePathWithParameterMarkedWithLtAndGtSymbols
   });
+}
+
+void exchangeVoidToVoidFunction<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>(
+  void serialized, 
+  InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+) {
+  return;
 }
 
 class ExchangeFormat<Request, ResponseDataSuccess, ResponseDataFailed, RequestSerialized, ResponseDataSuccessSerialized, ResponseDataFailedSerialized>{

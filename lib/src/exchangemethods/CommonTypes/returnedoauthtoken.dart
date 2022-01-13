@@ -6,7 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'returnedoauthtoken.g.dart';
 
 @JsonSerializable()
-class ExchangedReturnedUserToken implements Serializable<Map<String,dynamic>>{
+class ExchangedReturnedOAuthToken implements Serializable<Map<String,dynamic>>{
   @JsonKey(required: true, name: 'access_token')
   String accessToken;
 
@@ -22,72 +22,100 @@ class ExchangedReturnedUserToken implements Serializable<Map<String,dynamic>>{
   @JsonKey(required: true, name: 'valid')
   bool valid;
 
+  @JsonKey(required:true, name: 'exchange_method', toJson: Serializable.convertToDynamicSerialized, fromJson: ExchangeMethod.fromJson)
+  ExchangeMethod exchangeMethod;
+
+  @JsonKey(required: true, name: 'oauth_perm')
+  OAuthPermissionInfo tokenPermission;
+
+  @JsonKey(required: true, name: 'user_unique_id')
+  String userUniqueId;
+
+  @JsonKey(required: true, name: 'client_id')
+  String appClientId;
+
+  @JsonKey(name: 'custom_role')
+  int? customRole;
+
   @override
-  Map<String, dynamic> serialize([String? locale]) => _$ExchangedReturnedUserTokenToJson(this);
+  Map<String, dynamic> serialize([String? locale]) => _$ExchangedReturnedOAuthTokenToJson(this);
 
   @override
   Map<String, dynamic> toJson() => serialize(null);
 
-  ExchangedReturnedUserToken({
+  ExchangedReturnedOAuthToken({
+    required this.userUniqueId,
+    required this.appClientId,  
     required this.accessToken,
     required this.accessTokenExpires,
     required this.refreshToken,
     required this.refreshTokenExpires,
-    required this.valid
+    required this.valid,
+    required this.exchangeMethod,
+    required this.tokenPermission,
+    this.customRole
   });
-  factory ExchangedReturnedUserToken.fromMap(Map<String,dynamic> map) => _$ExchangedReturnedUserTokenFromJson(map);
-  static ExchangedReturnedUserToken fromJson(Map<String,dynamic> json) => ExchangedReturnedUserToken.fromMap(json);
-  static ExchangedReturnedUserToken? fromJsonNullable(Map<String,dynamic>? json) => json == null ? null : fromJson(json);
+  factory ExchangedReturnedOAuthToken.fromMap(Map<String,dynamic> map) => _$ExchangedReturnedOAuthTokenFromJson(map);
+  static ExchangedReturnedOAuthToken fromJson(Map<String,dynamic> json) => ExchangedReturnedOAuthToken.fromMap(json);
+  static ExchangedReturnedOAuthToken? fromJsonNullable(Map<String,dynamic>? json) => json == null ? null : fromJson(json);
 }
 
 @JsonSerializable()
-class ExchangeUserTokenRequiredRequest{
-  @JsonKey(required: true, name: 'user_access_token')
-  String userAccessToken;
+class ExchangeOAuthTokenRequiredRequest{
+  @JsonKey(required: true, name: 'oauth_access_token')
+  String oAuthAccessToken;
   @JsonKey(required: true, name: 'user_unique_id')
   String userUniqueId;
+  @JsonKey(required: true, name: 'client_id')
+  String appClientId;
 
-  ExchangeUserTokenRequiredRequest({required this.userAccessToken, required this.userUniqueId});
+  ExchangeOAuthTokenRequiredRequest({required this.oAuthAccessToken, required this.userUniqueId, required this.appClientId});
 
   static Map<String,dynamic> staticSerialize<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
   (
-    ExchangeUserTokenRequiredRequest request,
+    ExchangeOAuthTokenRequiredRequest request,
     InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
-  ) => _$ExchangeUserTokenRequiredRequestToJson(request);
+  ) => _$ExchangeOAuthTokenRequiredRequestToJson(request);
 
-  static ExchangeUserTokenRequiredRequest fromJson<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
+  static ExchangeOAuthTokenRequiredRequest fromJson<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
   (
     Map<String,dynamic> map,
     InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
-  ) => _$ExchangeUserTokenRequiredRequestFromJson(map);
+  ) => _$ExchangeOAuthTokenRequiredRequestFromJson(map);
 
-  static void appendSerialize(Map<String,dynamic> appendTo, ExchangeUserTokenRequiredRequest request){
-    appendTo['user_access_token'] = request.userAccessToken;
+  static void appendSerialize(Map<String,dynamic> appendTo, ExchangeOAuthTokenRequiredRequest request){
+    appendTo['oauth_access_token'] = request.oAuthAccessToken;
+    appendTo['user_unique_id'] = request.userUniqueId;
+    appendTo['client_id'] = request.appClientId;
   }
 }
 
 @JsonSerializable()
-class ExchangeUserRefreshTokenRequiredRequest{
-  @JsonKey(required: true, name: 'user_refresh_token')
-  String userRefreshToken;
+class ExchangeOAuthRefreshTokenRequiredRequest{
+  @JsonKey(required: true, name: 'oauth_refresh_token')
+  String oAuthRefreshToken;
   @JsonKey(required: true, name: 'user_unique_id')
   String userUniqueId;
+  @JsonKey(required: true, name: 'client_id')
+  String appClientId;
 
-  ExchangeUserRefreshTokenRequiredRequest({required this.userRefreshToken, required this.userUniqueId});
+  ExchangeOAuthRefreshTokenRequiredRequest({required this.oAuthRefreshToken, required this.userUniqueId, required this.appClientId});
 
   static Map<String,dynamic> staticSerialize<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
   (
-    ExchangeUserRefreshTokenRequiredRequest request,
+    ExchangeOAuthRefreshTokenRequiredRequest request,
     InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
-  ) => _$ExchangeUserRefreshTokenRequiredRequestToJson(request);
+  ) => _$ExchangeOAuthRefreshTokenRequiredRequestToJson(request);
 
-  static ExchangeUserRefreshTokenRequiredRequest fromJson<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
+  static ExchangeOAuthRefreshTokenRequiredRequest fromJson<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>
   (
     Map<String,dynamic> map,
     InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
-  ) => _$ExchangeUserRefreshTokenRequiredRequestFromJson(map);
+  ) => _$ExchangeOAuthRefreshTokenRequiredRequestFromJson(map);
 
-  static void appendSerialize(Map<String,dynamic> appendTo, ExchangeUserRefreshTokenRequiredRequest request){
-    appendTo['user_refresh_token'] = request.userRefreshToken;
+  static void appendSerialize(Map<String,dynamic> appendTo, ExchangeOAuthRefreshTokenRequiredRequest request){
+    appendTo['oauth_refresh_token'] = request.oAuthRefreshToken;
+    appendTo['user_unique_id'] = request.userUniqueId;
+    appendTo['client_id'] = request.appClientId;
   }
 }
