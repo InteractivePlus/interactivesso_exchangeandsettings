@@ -3,7 +3,7 @@ import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
 import 'package:interactivesso_exchangeandsettings/src/setting_objects/sharedsettings.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'returnedtoken.g.dart';
+part 'returnedoauthtoken.g.dart';
 
 @JsonSerializable()
 class ExchangedReturnedUserToken implements Serializable<Map<String,dynamic>>{
@@ -22,9 +22,6 @@ class ExchangedReturnedUserToken implements Serializable<Map<String,dynamic>>{
   @JsonKey(required: true, name: 'valid')
   bool valid;
 
-  @JsonKey(required: true, name: 'user_unique_id')
-  String userUniqueId;
-
   @override
   Map<String, dynamic> serialize([String? locale]) => _$ExchangedReturnedUserTokenToJson(this);
 
@@ -32,7 +29,6 @@ class ExchangedReturnedUserToken implements Serializable<Map<String,dynamic>>{
   Map<String, dynamic> toJson() => serialize(null);
 
   ExchangedReturnedUserToken({
-    required this.userUniqueId,
     required this.accessToken,
     required this.accessTokenExpires,
     required this.refreshToken,
