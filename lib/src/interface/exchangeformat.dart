@@ -2,6 +2,9 @@
 import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
 import 'package:interactivesso_exchangeandsettings/src/setting_objects/sharedsettings.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'exchangeformat.g.dart';
 
 class ExchangeResponse<SuccessData, FailData>{
   InteractivePlusSystemException? exception;
@@ -42,6 +45,27 @@ class ExchangeResponse<SuccessData, FailData>{
   }
 }
 
+@JsonSerializable(includeIfNull: false)
+class InternationalilzedExchangeRequest{
+  @JsonKey(name: 'preferred_locale')
+  String? preferredLocale;
+
+  InternationalilzedExchangeRequest({this.preferredLocale});
+
+  void appendSerialize(Map<String,dynamic> toAppendTo){
+    if(preferredLocale != null){
+      toAppendTo['preferred_locale'] = preferredLocale;
+    }
+  }
+
+  static List<String>? validate<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>(
+    InternationalilzedExchangeRequest request, 
+    InteractiveSSOSharedSettings<CaptchaSerializedInfo, CaptchaInfo> sharedSettings
+  ){
+    return null;
+  }
+}
+
 enum ExchangeHTTPMethod{
   GET,
   POST,
@@ -72,7 +96,7 @@ class ExchangeFormat<Request, ResponseDataSuccess, ResponseDataFailed, RequestSe
   
   ///Validate Requests should return map key in the serialized request data structure that triggered the error
   ///If null is returned, it means the Request Object has passed the test.
-  final List<String?> Function<CaptchaInfoSerialized, CaptchaInfo extends CaptchaSubmitInfo<CaptchaInfoSerialized>>(Request req, InteractiveSSOSharedSettings<CaptchaInfoSerialized, CaptchaInfo> sharedSettings)? validateRequest;
+  final List<String>? Function<CaptchaInfoSerialized, CaptchaInfo extends CaptchaSubmitInfo<CaptchaInfoSerialized>>(Request req, InteractiveSSOSharedSettings<CaptchaInfoSerialized, CaptchaInfo> sharedSettings)? validateRequest;
   
   final ResponseDataSuccess Function(ResponseDataSuccessSerialized serialized, InteractiveSSOSharedSettings sharedSettings) parseSuccessResponseData;
   final ResponseDataFailed Function(ResponseDataFailedSerialized serialized, InteractiveSSOSharedSettings sharedSettings) parseFailedResponseData;
