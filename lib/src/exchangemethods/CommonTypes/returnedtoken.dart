@@ -71,6 +71,16 @@ class ExchangeUserTokenRequiredRequest{
     appendTo['user_access_token'] = request.userAccessToken;
     appendTo['user_unique_id'] = request.userUniqueId;
   }
+  static List<String>? validate(ExchangeUserTokenRequiredRequest req){
+    List<String> retList = List.empty(growable: true);
+    if(req.userUniqueId.isEmpty){
+      retList.add('user_unique_id');
+    }else if(req.userAccessToken.isEmpty){
+      retList.add('user_access_token');
+    }
+    return retList.isEmpty ? null : retList;
+  }
+  static final validateWithSettings = ssoConvertToExchangeFormatFunc(validate);
 }
 
 @JsonSerializable()
@@ -98,4 +108,14 @@ class ExchangeUserRefreshTokenRequiredRequest{
     appendTo['user_refresh_token'] = request.userRefreshToken;
     appendTo['user_unique_id'] = request.userUniqueId;
   }
+  static List<String>? validate(ExchangeUserRefreshTokenRequiredRequest req){
+    List<String> retList = List.empty(growable: true);
+    if(req.userUniqueId.isEmpty){
+      retList.add('user_unique_id');
+    }else if(req.userRefreshToken.isEmpty){
+      retList.add('user_refresh_token');
+    }
+    return retList.isEmpty ? null : retList;
+  }
+  static final validateWithSettings = ssoConvertToExchangeFormatFunc(validate);
 }

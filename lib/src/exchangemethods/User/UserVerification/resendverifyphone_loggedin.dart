@@ -66,7 +66,7 @@ InteractiveSSOExchangeFormat<ResendVerifyPhoneLoggedInRequest, void, void, Map<S
     method: ExchangeHTTPMethod.POST, 
     successfulHTTPCode: 201, 
     possibleHTTPCodes: [201, 400, 403], 
-    relativePathWithParameterMarkedWithLtAndGtSymbols: '/user/<user_unique_id>/loggedin_verify_phone_message'
+    relativePathWithParameterMarkedWithLtAndGtSymbols: '/user/<user_unique_id>/verification_messages/loggedin_verify_phone_message'
   ), 
   rateLimitMetaData: const ExchangeRateLimitMetaData(
     numRequestPerIPPerMin: 5,
