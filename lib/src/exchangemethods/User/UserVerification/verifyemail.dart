@@ -8,7 +8,7 @@ InteractiveSSOExchangeFormat<ExchangedVerificationCodeRequiredRequest,void,void,
     method: ExchangeHTTPMethod.GET, 
     successfulHTTPCode: 200, 
     possibleHTTPCodes: [200, 400, 403, 500], 
-    relativePathWithParameterMarkedWithLtAndGtSymbols: '/user/<vericode_user_unique_id>/verifyEmailResult'
+    relativePathWithParameterMarkedWithLtAndGtSymbols: '/user/<user_unique_id>/verifyEmailResult'
   ), 
   rateLimitMetaData: const ExchangeRateLimitMetaData(
     numRequestPerUserPerMin: 3,

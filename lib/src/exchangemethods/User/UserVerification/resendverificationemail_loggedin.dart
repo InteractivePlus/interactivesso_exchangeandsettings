@@ -8,7 +8,7 @@ InteractiveSSOExchangeFormat<ExchangeUserTokenRequiredRequest, void, void, Map<S
     method: ExchangeHTTPMethod.POST, 
     successfulHTTPCode: 201, 
     possibleHTTPCodes: [201, 400, 403], 
-    relativePathWithParameterMarkedWithLtAndGtSymbols: '/user/<user_unique_id>/loggedin_verification_email'
+    relativePathWithParameterMarkedWithLtAndGtSymbols: '/user/<user_unique_id>/verification_messages/loggedin_verification_email'
   ), 
   rateLimitMetaData: const ExchangeRateLimitMetaData(
     numRequestPerIPPerMin: 5,

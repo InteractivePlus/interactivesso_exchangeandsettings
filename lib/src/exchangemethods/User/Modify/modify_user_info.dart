@@ -1,52 +1,11 @@
 import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
+import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/modifyrequestparam.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedtoken.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returneduserentity.dart';
 import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'modify_user_info.g.dart';
-
-
-abstract class ModifyUserInfoRequestItem<T>{
-  bool changeValue;
-  T? value;
-  validate();
-  ModifyUserInfoRequestItem({required this.changeValue, required this.value});
-}
-
-@JsonSerializable()
-class ModifyUserInfoRequestItemString implements ModifyUserInfoRequestItem<String?>{
-  @override
-  bool changeValue;
-
-  @override
-  String? value;
-
-  @override
-  bool validate() => changeValue == false || value != null;
-  
-  ModifyUserInfoRequestItemString({required this.changeValue, required this.value});
-  factory ModifyUserInfoRequestItemString.fromJson(Map<String,dynamic> json) => _$ModifyUserInfoRequestItemStringFromJson(json);
-
-  Map<String,dynamic> toJson() => _$ModifyUserInfoRequestItemStringToJson(this);
-}
-
-@JsonSerializable()
-class ModifyUserInfoRequestItemStringNullable implements ModifyUserInfoRequestItem<String>{
-  @override
-  bool changeValue;
-
-  @override
-  String? value;
-
-  @override
-  bool validate() => true;
-  
-  ModifyUserInfoRequestItemStringNullable({required this.changeValue, required this.value});
-  factory ModifyUserInfoRequestItemStringNullable.fromJson(Map<String,dynamic> json) => _$ModifyUserInfoRequestItemStringNullableFromJson(json);
-
-  Map<String,dynamic> toJson() => _$ModifyUserInfoRequestItemStringNullableToJson(this);
-}
 
 @JsonSerializable()
 class ModifyUserInfoRequest implements ExchangeUserTokenRequiredRequest{
@@ -58,20 +17,20 @@ class ModifyUserInfoRequest implements ExchangeUserTokenRequiredRequest{
   @override
   String userUniqueId;
 
-  ModifyUserInfoRequestItemString username;
+  ModifyRequestParamItemString username;
 
-  ModifyUserInfoRequestItemStringNullable nickname;
+  ModifyRequestParamItemStringNullable nickname;
 
-  ModifyUserInfoRequestItemStringNullable signature;
+  ModifyRequestParamItemStringNullable signature;
 
   @JsonKey(name: 'area')
-  ModifyUserInfoRequestItemStringNullable areaAlpha2Code;
+  ModifyRequestParamItemStringNullable areaAlpha2Code;
 
   @JsonKey(name: 'locale')
-  ModifyUserInfoRequestItemStringNullable localeCode;
+  ModifyRequestParamItemStringNullable localeCode;
 
   @JsonKey(name: 'avatar_hash')
-  ModifyUserInfoRequestItemStringNullable avatarHash;
+  ModifyRequestParamItemStringNullable avatarHash;
 
   ModifyUserInfoRequest({
     required this.userUniqueId,
