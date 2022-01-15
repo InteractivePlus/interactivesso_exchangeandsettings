@@ -111,4 +111,8 @@ class ExchangedReturnedAppSimpleInfo implements Serializable<Map<String,dynamic>
       return fromJson(json);
     }
   }
+  static Map<String,dynamic> staticSerialize(ExchangedReturnedAppSimpleInfo inf) => inf.toJson();
+  static ExchangedReturnedAppSimpleInfo staticDeserialize(Map<String,dynamic> map) => ExchangedReturnedAppSimpleInfo.fromJson(map);
+  static final staticSerializeWithSettings = ssoConvertToExchangeFormatFunc(staticSerialize);
+  static final staticDeserializeWithSettings = ssoConvertToExchangeFormatFunc(staticDeserialize);
 }

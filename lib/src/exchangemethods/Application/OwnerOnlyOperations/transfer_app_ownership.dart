@@ -82,5 +82,5 @@ InteractiveSSOExchangeFormat<TransferAPPOwnershipRequest, ExchangedReturnedAppIn
     serializeSuccessResponseData: ExchangedReturnedAppInfo.staticSerializeWithSettings, 
     serializeFailedResponseData: ssoExchangeVoidToVoidFunc, 
     requireVerificationCode: true,
-    requiredVerificationCodeScope: 'manageApp'
+    requiredVerificationCodeScope: 'editApp'
   );
