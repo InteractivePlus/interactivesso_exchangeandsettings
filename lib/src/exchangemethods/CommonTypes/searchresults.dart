@@ -1,0 +1,16 @@
+import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
+import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedappinfo.dart';
+import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returneduserentity.dart';
+import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
+
+typedef ExchangeSearchAPPResult = SearchResult<ExchangedReturnedAppInfo>;
+Map<String,dynamic> exchangeSearchAPPResultStaticSerialize(ExchangeSearchAPPResult rst) => rst.toJson();
+ExchangeSearchAPPResult exchangeSearchAPPResultStaticDeserialize(Map<String,dynamic> serialized) => SearchResult.fromJson<ExchangedReturnedAppInfo>(serialized, ExchangedReturnedAppInfo.staticDeserialize);
+final exchangeSearchAPPResultStaticSerializeWithSettings = ssoConvertToExchangeFormatFunc(exchangeSearchAPPResultStaticSerialize);
+final exchangeSearchAPPResultStaticDeserializeWithSettings = ssoConvertToExchangeFormatFunc(exchangeSearchAPPResultStaticDeserialize);
+
+typedef ExchangeSearchSimpleUserResult = SearchResult<ExchangedSimpleUserInfo>;
+Map<String,dynamic> exchangeSearchSimpleUserResultStaticSerialize(ExchangeSearchSimpleUserResult rst) => rst.toJson();
+ExchangeSearchSimpleUserResult exchangeSearchSimpleUserResultStaticDeserialize(Map<String,dynamic> serialized) => SearchResult.fromJson<ExchangedSimpleUserInfo>(serialized, ExchangedSimpleUserInfo.fromJson);
+final exchangeSearchSimpleUserResultStaticSerializeWithSettings = ssoConvertToExchangeFormatFunc(exchangeSearchSimpleUserResultStaticSerialize);
+final exchangeSearchSimpleUserResultStaticDeserializeWithSettings = ssoConvertToExchangeFormatFunc(exchangeSearchSimpleUserResultStaticDeserialize);

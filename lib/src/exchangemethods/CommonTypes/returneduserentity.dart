@@ -124,6 +124,9 @@ class ExchangedSimpleUserInfo implements Serializable<Map<String,dynamic>>{
   });
 
   factory ExchangedSimpleUserInfo.fromMap(Map<String,dynamic> map) => _$ExchangedSimpleUserInfoFromJson(map);
-  static ExchangedUserEntity fromJson(Map<String,dynamic> json) => ExchangedUserEntity.fromMap(json);
-  static ExchangedUserEntity? fromJsonNullable(Map<String,dynamic>? json) => json == null ? null : fromJson(json);
+  static ExchangedSimpleUserInfo fromJson(Map<String,dynamic> json) => ExchangedSimpleUserInfo.fromMap(json);
+  static ExchangedSimpleUserInfo? fromJsonNullable(Map<String,dynamic>? json) => json == null ? null : fromJson(json);
+  static Map<String,dynamic> staticSerialize(ExchangedSimpleUserInfo user) => user.toJson();
+  static final staticSerializeWithSettings = ssoConvertToExchangeFormatFunc(staticSerialize);
+  static final staticDeserializeWithSettings = ssoConvertToExchangeFormatFunc(fromJson);
 }
