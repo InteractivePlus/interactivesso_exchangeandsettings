@@ -2,10 +2,11 @@ import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.da
 import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/captcharequiredrequest.dart';
+import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/sendvericoderequest.dart';
 import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 import 'package:interactivesso_exchangeandsettings/src/setting_objects/sharedsettings.dart';
 
-class ResendVerifyPhoneNotLoggedInRequest<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerialized>> implements ExchangeCaptchaRequiredRequest<CaptchaSerialized, CaptchaInfo>{
+class ResendVerifyPhoneNotLoggedInRequest<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerialized>> implements ExchangeSendVericodeRequest, ExchangeCaptchaRequiredRequest<CaptchaSerialized, CaptchaInfo>{
   @override
   CaptchaInfo captchaInfo;
 
@@ -13,8 +14,10 @@ class ResendVerifyPhoneNotLoggedInRequest<CaptchaSerialized, CaptchaInfo extends
 
   String password;
 
-  CommunicationMethod? preferredCommunicationMethod;
+  @override
+  CommunicationMethod? preferredMethod;
 
+  @override
   bool forcePreferredMethod;
 
   ResendVerifyPhoneNotLoggedInRequest({
@@ -22,7 +25,7 @@ class ResendVerifyPhoneNotLoggedInRequest<CaptchaSerialized, CaptchaInfo extends
     required this.password,
     required this.captchaInfo,
     this.forcePreferredMethod = false,
-    this.preferredCommunicationMethod
+    this.preferredMethod
   });
 
   static Map<String,dynamic> staticSerializeWithSettings<FineSetting extends InteractiveSSOExchangeSharedSetting>
@@ -35,8 +38,8 @@ class ResendVerifyPhoneNotLoggedInRequest<CaptchaSerialized, CaptchaInfo extends
       'password': req.password,
       'force_preferred_method': req.forcePreferredMethod,
     };
-    if(req.preferredCommunicationMethod != null){
-      retMap['preferred_method'] = Serializable.convertToSerialized(req.preferredCommunicationMethod!);
+    if(req.preferredMethod != null){
+      retMap['preferred_method'] = Serializable.convertToSerialized(req.preferredMethod!);
     }
     ExchangeCaptchaRequiredRequest.appendSerializeWithSetting(retMap, req, sharedSettings);
     return retMap;
@@ -51,22 +54,22 @@ class ResendVerifyPhoneNotLoggedInRequest<CaptchaSerialized, CaptchaInfo extends
     password: reqSerialized['password'] as String, 
     captchaInfo: sharedSettings.captchaInfoSerializer.fromDynamicSerialized(reqSerialized['captcha_info']),
     forcePreferredMethod: reqSerialized['force_preferred_method'] as bool,
-    preferredCommunicationMethod: reqSerialized['preferred_method'] == null ? null : CommunicationMethod.fromJson(reqSerialized['preferred_method'] as String)
+    preferredMethod: reqSerialized['preferred_method'] == null ? null : CommunicationMethod.fromJson(reqSerialized['preferred_method'] as String)
   );
 
-  static List<String>? validate<FineSetting extends InteractiveSSOExchangeSharedSetting>
+  static Set<String>? validate<FineSetting extends InteractiveSSOExchangeSharedSetting>
   (
     ResendVerifyPhoneNotLoggedInRequest req,
     FineSetting sharedSettings
   ){
-    List<String> retList = List.empty(growable: true);
+    Set<String> retList = {};
     if(req.userUniqueId.isEmpty){
       retList.add('user_unique_id');
     }
     if(!sharedSettings.validatorSettings.userSystemValidators.passwordFormatValidator.validate(req.password)){
       retList.add('password');
     }
-    if(req.preferredCommunicationMethod != null && req.preferredCommunicationMethod!.verifyTarget != PhoneOrEmail.phone){
+    if(req.preferredMethod != null && req.preferredMethod!.verifyTarget != PhoneOrEmail.phone){
       retList.add('preferred_method');
     }
     return retList.isEmpty ? null : retList;

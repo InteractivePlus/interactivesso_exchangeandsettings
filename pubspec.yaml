@@ -17,7 +17,7 @@ dev_dependencies:
   test: ^1.16.0
 dependencies: 
   characters: ^1.2.0
-  interactiveplus_exchangeformat: ^0.0.4
+  interactiveplus_exchangeformat: ^0.0.5
   interactiveplus_shared_dart: ^0.0.12
   interactivesso_datatypes: ^0.0.8
   json_annotation: ^4.4.0

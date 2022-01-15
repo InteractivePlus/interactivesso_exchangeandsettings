@@ -42,12 +42,12 @@ class ResendVerificationEmailNotLoggedInRequest<CaptchaSerialized, CaptchaInfo e
     captchaInfo: sharedSettings.captchaInfoSerializer.fromDynamicSerialized(reqSerialized['captcha_info'])
   );
   
-  static List<String>? validate<FineSetting extends InteractiveSSOExchangeSharedSetting>
+  static Set<String>? validate<FineSetting extends InteractiveSSOExchangeSharedSetting>
   (
     ResendVerificationEmailNotLoggedInRequest req,
     FineSetting sharedSettings
   ){
-    List<String>? retList = List.empty(growable: true);
+    Set<String>? retList = {};
     if(req.userUniqueId.isEmpty){
       retList.add('user_unique_id');
     }

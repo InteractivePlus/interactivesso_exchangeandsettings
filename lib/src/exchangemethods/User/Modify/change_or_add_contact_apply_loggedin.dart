@@ -4,6 +4,7 @@ import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedtoken.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returneduserentity.dart';
+import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/sendvericoderequest.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/vericoderequiredrequest.dart';
 import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -12,7 +13,7 @@ import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 part 'change_or_add_contact_apply_loggedin.g.dart';
 
 @JsonSerializable()
-class ChangeOrAddContactApplyLoggedInRequest implements ExchangedVerificationCodeRequiredRequest,ExchangeUserTokenRequiredRequest{
+class ChangeOrAddContactApplyLoggedInRequest implements ExchangeSendVericodeRequest, ExchangedVerificationCodeRequiredRequest,ExchangeUserTokenRequiredRequest{
   @JsonKey(required: true, name: 'is_vericode_short_id')
   @override
   bool isVericodeShortId;
@@ -29,10 +30,6 @@ class ChangeOrAddContactApplyLoggedInRequest implements ExchangedVerificationCod
   @override
   String vericodeId;
 
-  @JsonKey(required: true, name: 'vericode_user_unique_id')
-  @override
-  String vericodeUserUniqueId;
-
   @JsonKey(required: true, name: 'change_phone')
   bool changePhone;
 
@@ -44,13 +41,14 @@ class ChangeOrAddContactApplyLoggedInRequest implements ExchangedVerificationCod
   PhoneNumber? newPhoneNum;
 
   @JsonKey(name: 'preferred_method', fromJson: CommunicationMethod.fromJsonNullable, toJson: Serializable.convertToDynamicSerializedWithNullable)
+  @override
   CommunicationMethod? preferredMethod;
 
   @JsonKey(name: 'force_preferred_method')
+  @override
   bool forcePreferredMethod;
 
   ChangeOrAddContactApplyLoggedInRequest({
-    required this.vericodeUserUniqueId,
     required this.vericodeId,
     required this.isVericodeShortId,
     required this.userAccessToken,
@@ -66,11 +64,11 @@ class ChangeOrAddContactApplyLoggedInRequest implements ExchangedVerificationCod
 
   static Map<String,dynamic> staticSerialize(ChangeOrAddContactApplyLoggedInRequest o) => o.toJson();
   static ChangeOrAddContactApplyLoggedInRequest staticDeserialize(Map<String,dynamic> m) => ChangeOrAddContactApplyLoggedInRequest.fromJson(m);
-  static List<String>? staticValidateWithSettings<FineSetting extends InteractiveSSOExchangeSharedSetting>(
+  static Set<String>? staticValidateWithSettings<FineSetting extends InteractiveSSOExchangeSharedSetting>(
     ChangeOrAddContactApplyLoggedInRequest o,
     FineSetting sharedSetting
   ){
-    List<String> retList = List.empty(growable: true);
+    Set<String> retList = {};
     var vericodeRst = ExchangedVerificationCodeRequiredRequest.validate(o);
     if(vericodeRst != null){
       retList.addAll(vericodeRst);

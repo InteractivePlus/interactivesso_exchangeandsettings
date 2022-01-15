@@ -2,6 +2,7 @@ import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.da
 import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedtoken.dart';
+import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/sendvericoderequest.dart';
 import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 import 'package:interactivesso_exchangeandsettings/src/setting_objects/sharedsettings.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -9,19 +10,21 @@ import 'package:json_annotation/json_annotation.dart';
 part 'resendverifyphone_loggedin.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class ResendVerifyPhoneLoggedInRequest extends ExchangeUserTokenRequiredRequest implements Serializable<Map<String,dynamic>>{
+class ResendVerifyPhoneLoggedInRequest extends ExchangeUserTokenRequiredRequest implements ExchangeSendVericodeRequest, Serializable<Map<String,dynamic>>{
 
   @JsonKey(name: 'preferred_method', fromJson: CommunicationMethod.fromJsonNullable, toJson: Serializable.convertToDynamicSerializedWithNullable)
-  CommunicationMethod? preferredCommunicationMethod;
+  @override
+  CommunicationMethod? preferredMethod;
 
   @JsonKey(name: 'force_preferred_method')
+  @override
   bool forcePreferredMethod;
 
   ResendVerifyPhoneLoggedInRequest({
     required String userUniqueId,
     required String userAccessToken,
     this.forcePreferredMethod = false,
-    this.preferredCommunicationMethod
+    this.preferredMethod
   }) : super(userUniqueId: userUniqueId, userAccessToken: userAccessToken);
 
   factory ResendVerifyPhoneLoggedInRequest.fromMap(Map<String,dynamic> map) => _$ResendVerifyPhoneLoggedInRequestFromJson(map);
@@ -52,7 +55,7 @@ class ResendVerifyPhoneLoggedInRequest extends ExchangeUserTokenRequiredRequest 
     ResendVerifyPhoneLoggedInRequest req,
     FineSetting sharedSettings
   ){
-    if(req.preferredCommunicationMethod != null && req.preferredCommunicationMethod!.verifyTarget != PhoneOrEmail.phone){
+    if(req.preferredMethod != null && req.preferredMethod!.verifyTarget != PhoneOrEmail.phone){
       return ['preferred_method'];
     }else{
       return null;

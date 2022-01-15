@@ -13,13 +13,13 @@ class ExchangedVerificationCodeRequiredRequest{
   @JsonKey(required: true, name: 'is_vericode_short_id')
   bool isVericodeShortId;
 
-  @JsonKey(required: true, name: 'vericode_user_unique_id')
-  String vericodeUserUniqueId;
+  @JsonKey(required: true, name: 'user_unique_id')
+  String userUniqueId;
 
   ExchangedVerificationCodeRequiredRequest({
     required this.vericodeId,
     required this.isVericodeShortId,
-    required this.vericodeUserUniqueId
+    required this.userUniqueId
   });
   factory ExchangedVerificationCodeRequiredRequest.fromMap(Map<String,dynamic> map) => _$ExchangedVerificationCodeRequiredRequestFromJson(map);
   static ExchangedVerificationCodeRequiredRequest fromJson(Map<String,dynamic> json) => ExchangedVerificationCodeRequiredRequest.fromMap(json);
@@ -28,21 +28,21 @@ class ExchangedVerificationCodeRequiredRequest{
   static void appendToSerialize(Map<String, dynamic> toAppend, ExchangedVerificationCodeRequiredRequest request){
     toAppend['vericode_id'] = request.vericodeId;
     toAppend['is_vericode_short_id'] = request.isVericodeShortId;
-    toAppend['vericode_user_unique_id'] = request.vericodeUserUniqueId;
+    toAppend['user_unique_id'] = request.userUniqueId;
   }
   static Map<String,dynamic> staticSerialize(ExchangedVerificationCodeRequiredRequest request) => _$ExchangedVerificationCodeRequiredRequestToJson(request);
   static ExchangedVerificationCodeRequiredRequest staticDeserialize(Map<String,dynamic> json) => ExchangedVerificationCodeRequiredRequest.fromMap(json);
   static final staticSerializeWithSetting = ssoConvertToExchangeFormatFunc(staticSerialize);
-  static List<String>? validate
+  static Set<String>? validate
   (
     ExchangedVerificationCodeRequiredRequest req,
   ){
-    List<String> retList = List.empty(growable: true);
+    Set<String> retList = {};
     if(req.vericodeId.isEmpty){
       retList.add('vericode_id');
     }
-    if(req.vericodeUserUniqueId.isEmpty){
-      retList.add('vericodeUserUniqueId');
+    if(req.userUniqueId.isEmpty){
+      retList.add('user_unique_id');
     }
     return retList.isEmpty ? null : retList;
   }

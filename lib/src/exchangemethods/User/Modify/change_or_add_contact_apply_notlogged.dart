@@ -2,11 +2,12 @@ import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.da
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/captcharequiredrequest.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returneduserentity.dart';
+import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/sendvericoderequest.dart';
 import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 
 
-class ChangeOrAddContactApplyNotLoggedRequest<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerialized>> implements ExchangeCaptchaRequiredRequest<CaptchaSerialized,CaptchaInfo>{
+class ChangeOrAddContactApplyNotLoggedRequest<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerialized>> implements ExchangeSendVericodeRequest, ExchangeCaptchaRequiredRequest<CaptchaSerialized,CaptchaInfo>{
   @override
   CaptchaInfo captchaInfo;
 
@@ -20,8 +21,10 @@ class ChangeOrAddContactApplyNotLoggedRequest<CaptchaSerialized, CaptchaInfo ext
 
   PhoneNumber? newPhoneNum;
 
+  @override
   CommunicationMethod? preferredMethod;
 
+  @override
   bool forcePreferredMethod;
 
   ChangeOrAddContactApplyNotLoggedRequest({
@@ -66,14 +69,14 @@ class ChangeOrAddContactApplyNotLoggedRequest<CaptchaSerialized, CaptchaInfo ext
     changePhone: serialized['change_phone'] as bool,
     newEmail: serialized['new_email'] as String?,
     newPhoneNum: NullablePhoneNumberConverter().fromJson(serialized['new_phone'] as String?),
-    forcePreferredMethod: serialized['force_preferred_method'] as bool,
+    forcePreferredMethod: serialized['force_preferred_method'] as bool? ?? false,
     preferredMethod: serialized['preferred_method'] == null ? null : CommunicationMethod.fromString(serialized['preferred_method'] as String)
   );
-  static List<String>? staticValidateWithSettings<FineSetting extends InteractiveSSOExchangeSharedSetting>(
+  static Set<String>? staticValidateWithSettings<FineSetting extends InteractiveSSOExchangeSharedSetting>(
     ChangeOrAddContactApplyNotLoggedRequest req,
     FineSetting sharedSetting
   ){
-    List<String> retList = List.empty(growable: true);
+    Set<String> retList = {};
     if(req.userUniqueId.isEmpty){
       retList.add('user_unique_id');
     }

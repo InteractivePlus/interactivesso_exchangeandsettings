@@ -52,11 +52,11 @@ class GetResetPasswordVericodeRequest<CaptchaSerializedInfo, CaptchaInfo extends
     email: serialized['email'] as String?,
     phoneNumber: NullablePhoneNumberConverter().fromJson(serialized['phone'] as String?)
   );
-  static List<String>? staticValidateWithSettings<FineSetting extends InteractiveSSOExchangeSharedSetting>(
+  static Set<String>? staticValidateWithSettings<FineSetting extends InteractiveSSOExchangeSharedSetting>(
     GetResetPasswordVericodeRequest req,
     FineSetting sharedSettings
   ){
-    List<String> retList = List.empty(growable: true);
+    Set<String> retList = {};
     if(req.email != null && !sharedSettings.validatorSettings.userSystemValidators.emailValidator.validate(req.email!)){
       retList.add('email');
     }
@@ -114,8 +114,8 @@ class GetResetPasswordVericodeSuccessfulData{
 
   static Map<String,dynamic> staticSerialize(GetResetPasswordVericodeSuccessfulData o) => o.toJson();
   static GetResetPasswordVericodeSuccessfulData staticDeserialize(Map<String,dynamic> json) => GetResetPasswordVericodeSuccessfulData.fromJson(json);
-  static List<String>? validate(GetResetPasswordVericodeSuccessfulData o){
-    List<String> retList = List.empty(growable: true);
+  static Set<String>? validate(GetResetPasswordVericodeSuccessfulData o){
+    Set<String> retList = {};
     if(o.sentMethod.verifyTarget == PhoneOrEmail.email){
       if(o.email == null){
         retList.add('email');

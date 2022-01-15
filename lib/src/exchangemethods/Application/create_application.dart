@@ -35,11 +35,11 @@ class CreateApplicationRequest implements ExchangeUserTokenRequiredRequest{
   static CreateApplicationRequest staticDeserialize(Map<String,dynamic> serialized) => CreateApplicationRequest.fromJson(serialized);
   static final staticSerializeWithSettings = ssoConvertToExchangeFormatFunc(staticSerialize);
   static final staticDeserializeWithSettings = ssoConvertToExchangeFormatFunc(staticDeserialize);
-  static List<String>? staticValidateWithSettings<FineSetting extends InteractiveSSOExchangeSharedSetting>(
+  static Set<String>? staticValidateWithSettings<FineSetting extends InteractiveSSOExchangeSharedSetting>(
     CreateApplicationRequest req,
     FineSetting sharedSettings
   ){
-    List<String> retList = List.empty(growable: true);
+    Set<String> retList = {};
     var userTokenRst = ExchangeUserTokenRequiredRequest.validate(req);
     if(userTokenRst != null){
       retList.addAll(userTokenRst);
@@ -60,7 +60,7 @@ InteractiveSSOExchangeFormat<CreateApplicationRequest, ExchangedReturnedAppInfo,
     method: ExchangeHTTPMethod.POST, 
     successfulHTTPCode: 201, 
     possibleHTTPCodes: [201, 400, 403, 409, 500], 
-    relativePathWithParameterMarkedWithLtAndGtSymbols: 'apps/<display_name>'
+    relativePathWithParameterMarkedWithLtAndGtSymbols: 'user/<user_unique_id>/apps/<display_name>'
   ), 
   rateLimitMetaData: const ExchangeRateLimitMetaData(
     numRequestPerUserPerMin: 1

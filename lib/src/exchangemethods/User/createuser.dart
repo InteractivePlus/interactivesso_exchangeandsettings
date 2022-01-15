@@ -78,11 +78,11 @@ class CreateUserAPIRequest<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitI
       areaAlpha2Code: serialized['area'] as String?
     );
   }
-  static List<String>? validate<FineSetting extends InteractiveSSOExchangeSharedSetting>(
+  static Set<String>? validate<FineSetting extends InteractiveSSOExchangeSharedSetting>(
     CreateUserAPIRequest request, 
     FineSetting sharedSettings
   ){
-    List<String> returnList = List.empty(growable: true);
+    Set<String> returnList = {};
     UserSystemValidators userSystemValidators = sharedSettings.validatorSettings.userSystemValidators;
     if(!userSystemValidators.usernameValidator.validate(request.username)){
       returnList.add('username');

@@ -89,11 +89,11 @@ class ModifyUserInfoRequest implements ExchangeUserTokenRequiredRequest{
   static ModifyUserInfoRequest deserializeStatic(Map<String,dynamic> m) => ModifyUserInfoRequest.fromJson(m);
   static final serializeStaticWithSettings = ssoConvertToExchangeFormatFunc(serializeStatic);
   static final deserializeStaticWithSettings = ssoConvertToExchangeFormatFunc(deserializeStatic);
-  static List<String>? validateStatic<FineSetting extends InteractiveSSOExchangeSharedSetting>(
+  static Set<String>? validateStatic<FineSetting extends InteractiveSSOExchangeSharedSetting>(
     ModifyUserInfoRequest o,
     FineSetting sharedSettings
   ){
-    List<String> retList = List.empty(growable: true);
+    Set<String> retList = {};
     if(o.userUniqueId.isEmpty){
       retList.add('user_unique_id');
     }

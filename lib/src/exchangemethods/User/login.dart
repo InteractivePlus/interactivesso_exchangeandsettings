@@ -62,11 +62,11 @@ class UserLoginAPIRequest<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitIn
     email: reqSerialized['email'] as String?
   );
 
-  static List<String>? validateWithSettings<FineSetting extends InteractiveSSOExchangeSharedSetting>(
+  static Set<String>? validateWithSettings<FineSetting extends InteractiveSSOExchangeSharedSetting>(
     UserLoginAPIRequest req,
     FineSetting sharedSettings
   ){
-    List<String> retList = List.empty(growable: true);
+    Set<String> retList = {};
     if(req.email != null && !sharedSettings.validatorSettings.userSystemValidators.emailValidator.validate(req.email!)){
       retList.add('email');
     }

@@ -2,13 +2,14 @@ import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.da
 import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedtoken.dart';
+import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/sendvericoderequest.dart';
 import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'change_or_add_contact_loggedin.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class ChangeOrAddContactMethodLoggedInRequest implements ExchangeUserTokenRequiredRequest{
+class ChangeOrAddContactMethodLoggedInRequest implements ExchangeSendVericodeRequest, ExchangeUserTokenRequiredRequest{
   @JsonKey(required: true, name: 'user_access_token')
   @override
   String userAccessToken;
@@ -18,9 +19,11 @@ class ChangeOrAddContactMethodLoggedInRequest implements ExchangeUserTokenRequir
   String userUniqueId;
 
   @JsonKey(name: 'preferred_method', fromJson: CommunicationMethod.fromJsonNullable, toJson: Serializable.convertToDynamicSerializedWithNullable)
+  @override
   CommunicationMethod? preferredMethod;
 
   @JsonKey(name: 'force_preferred_method')
+  @override
   bool forcePreferredMethod;
 
   ChangeOrAddContactMethodLoggedInRequest({
@@ -31,13 +34,12 @@ class ChangeOrAddContactMethodLoggedInRequest implements ExchangeUserTokenRequir
   });
 
   factory ChangeOrAddContactMethodLoggedInRequest.fromJson(Map<String,dynamic> json) => _$ChangeOrAddContactMethodLoggedInRequestFromJson(json);
+  @override
   Map<String,dynamic> toJson() => _$ChangeOrAddContactMethodLoggedInRequestToJson(this);
 
   static Map<String,dynamic> staticSerialize(ChangeOrAddContactMethodLoggedInRequest o) => o.toJson();
   static ChangeOrAddContactMethodLoggedInRequest staticDeserialize(Map<String,dynamic> map) => ChangeOrAddContactMethodLoggedInRequest.fromJson(map);
-  static List<String>? validate(ChangeOrAddContactMethodLoggedInRequest o){
-    return ExchangeUserTokenRequiredRequest.validate(o);
-  }
+  static Set<String>? validate(ChangeOrAddContactMethodLoggedInRequest o) => ExchangeUserTokenRequiredRequest.validate(o);
   static final staticSerializeWithSettings = ssoConvertToExchangeFormatFunc(staticSerialize);
   static final staticDeserializeWithSettings = ssoConvertToExchangeFormatFunc(staticDeserialize);
   static final validateWithSettings = ssoConvertToExchangeFormatFunc(validate);

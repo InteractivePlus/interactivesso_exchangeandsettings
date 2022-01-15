@@ -71,8 +71,8 @@ class ExchangeUserTokenRequiredRequest{
     appendTo['user_access_token'] = request.userAccessToken;
     appendTo['user_unique_id'] = request.userUniqueId;
   }
-  static List<String>? validate(ExchangeUserTokenRequiredRequest req){
-    List<String> retList = List.empty(growable: true);
+  static Set<String>? validate(ExchangeUserTokenRequiredRequest req){
+    Set<String> retList = {};
     if(req.userUniqueId.isEmpty){
       retList.add('user_unique_id');
     }else if(req.userAccessToken.isEmpty){
