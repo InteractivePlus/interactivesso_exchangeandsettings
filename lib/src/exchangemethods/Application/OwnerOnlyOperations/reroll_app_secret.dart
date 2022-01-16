@@ -1,3 +1,4 @@
+
 import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedappinfo.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedtoken.dart';
@@ -5,10 +6,10 @@ import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTyp
 import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'transfer_app_ownership.g.dart';
+part 'reroll_app_secret.g.dart';
 
 @JsonSerializable()
-class TransferAPPOwnershipRequest implements ExchangedVerificationCodeRequiredRequest, ExchangeUserTokenRequiredRequest{
+class RerollAppSecretRequest implements ExchangedVerificationCodeRequiredRequest, ExchangeUserTokenRequiredRequest{
   @JsonKey(required: true, name: 'is_vericode_short_id')
   @override
   bool isVericodeShortId;
@@ -27,24 +28,19 @@ class TransferAPPOwnershipRequest implements ExchangedVerificationCodeRequiredRe
 
   @JsonKey(required: true, name: 'client_id')
   String appClientId;
-  
-  ///This UID must be already present in the manager list
-  @JsonKey(required: true, name: 'new_owner_unique_id')
-  String newOwnerUserUniqueId;
 
-  TransferAPPOwnershipRequest({
+  RerollAppSecretRequest({
     required this.isVericodeShortId,
     required this.vericodeId,
     required this.userUniqueId,
     required this.userAccessToken,
-    required this.appClientId,
-    required this.newOwnerUserUniqueId
+    required this.appClientId
   });
-  factory TransferAPPOwnershipRequest.fromJson(Map<String,dynamic> json) => _$TransferAPPOwnershipRequestFromJson(json);
-  Map<String,dynamic> toJson() => _$TransferAPPOwnershipRequestToJson(this);
-  static Map<String,dynamic> staticSerialize(TransferAPPOwnershipRequest req) => req.toJson();
-  static TransferAPPOwnershipRequest staticDeserialize(Map<String,dynamic> serialized) => TransferAPPOwnershipRequest.fromJson(serialized);
-  static Set<String>? staticValidate(TransferAPPOwnershipRequest req){
+  factory RerollAppSecretRequest.fromJson(Map<String,dynamic> json) => _$RerollAppSecretRequestFromJson(json);
+  Map<String,dynamic> toJson() => _$RerollAppSecretRequestToJson(this);
+  static Map<String,dynamic> staticSerialize(RerollAppSecretRequest req) => req.toJson();
+  static RerollAppSecretRequest staticDeserialize(Map<String,dynamic> serialized) => RerollAppSecretRequest.fromJson(serialized);
+  static Set<String>? staticValidate(RerollAppSecretRequest req){
     Set<String> retList = {};
     var veriCodeRst = ExchangedVerificationCodeRequiredRequest.validate(req);
     var tokenRst = ExchangeUserTokenRequiredRequest.validate(req);
@@ -57,9 +53,6 @@ class TransferAPPOwnershipRequest implements ExchangedVerificationCodeRequiredRe
     if(req.appClientId.isEmpty){
       retList.add('client_id');
     }
-    if(req.newOwnerUserUniqueId.isEmpty){
-      retList.add('new_owner_unique_id');
-    }
     return retList.isEmpty ? null : retList;
   }
   static final staticSerializeWithSettings = ssoConvertToExchangeFormatFunc(staticSerialize);
@@ -67,19 +60,19 @@ class TransferAPPOwnershipRequest implements ExchangedVerificationCodeRequiredRe
   static final staticValidateWithSettings = ssoConvertToExchangeFormatFunc(staticValidate);
 }
 
-InteractiveSSOExchangeFormat<TransferAPPOwnershipRequest, ExchangedReturnedAppInfo, void, Map<String,dynamic>, Map<String,dynamic>, void> tranferAppOwnershipAPI = ExchangeFormat(
-  exchangeProtocolName: 'transferAppOwnershipAPI', 
+InteractiveSSOExchangeFormat<RerollAppSecretRequest, ExchangedReturnedAppInfo, void, Map<String,dynamic>, Map<String,dynamic>, void> rerollAppSecretAPI = ExchangeFormat(
+  exchangeProtocolName: 'rerollAppSecretAPI', 
   httpMetaData: const ExchangeHTTPMetaData(
     method: ExchangeHTTPMethod.PATCH, 
     successfulHTTPCode: 200, 
     possibleHTTPCodes: [200, 400, 403, 500], 
-    relativePathWithParameterMarkedWithLtAndGtSymbols: 'user/<user_unique_id>/apps/<client_id>/owner'), 
+    relativePathWithParameterMarkedWithLtAndGtSymbols: 'user/<user_unique_id>/apps/<client_id>/client_secret'), 
     rateLimitMetaData: const ExchangeRateLimitMetaData(
-      numRequestPerUserPerMin: 5
+      numRequestPerUserPerMin: 2
     ), 
-    parseRequest: TransferAPPOwnershipRequest.staticDeserializeWithSettings, 
-    serializeRequest: TransferAPPOwnershipRequest.staticSerializeWithSettings, 
-    validateRequest: TransferAPPOwnershipRequest.staticValidateWithSettings,
+    parseRequest: RerollAppSecretRequest.staticDeserializeWithSettings, 
+    serializeRequest: RerollAppSecretRequest.staticSerializeWithSettings, 
+    validateRequest: RerollAppSecretRequest.staticValidateWithSettings,
     parseSuccessResponseData: ExchangedReturnedAppInfo.staticDeserializeWithSettings, 
     parseFailedResponseData: ssoExchangeVoidToVoidFunc, 
     serializeSuccessResponseData: ExchangedReturnedAppInfo.staticSerializeWithSettings, 

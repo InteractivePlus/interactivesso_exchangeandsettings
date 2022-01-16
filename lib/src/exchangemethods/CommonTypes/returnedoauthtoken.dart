@@ -29,6 +29,9 @@ class ExchangedReturnedOAuthToken implements Serializable<Map<String,dynamic>>{
   @JsonKey(required: true, name: 'oauth_perm')
   OAuthPermissionInfo tokenPermission;
 
+  @JsonKey(required: true, name: 'oauth_setting')
+  OAuthPermissionInfo tokenSetting;
+
   @JsonKey(required: true, name: 'user_unique_id')
   String userUniqueId;
 
@@ -54,11 +57,68 @@ class ExchangedReturnedOAuthToken implements Serializable<Map<String,dynamic>>{
     required this.valid,
     required this.exchangeMethod,
     required this.tokenPermission,
+    required this.tokenSetting,
     this.customRole
   });
   factory ExchangedReturnedOAuthToken.fromMap(Map<String,dynamic> map) => _$ExchangedReturnedOAuthTokenFromJson(map);
   static ExchangedReturnedOAuthToken fromJson(Map<String,dynamic> json) => ExchangedReturnedOAuthToken.fromMap(json);
   static ExchangedReturnedOAuthToken? fromJsonNullable(Map<String,dynamic>? json) => json == null ? null : fromJson(json);
+  static Map<String,dynamic> staticSerialize(ExchangedReturnedOAuthToken code) => code.toJson();
+  static final staticSerializeWithSettings = ssoConvertToExchangeFormatFunc(staticSerialize);
+  static final staticDeserializeWithSettings = ssoConvertToExchangeFormatFunc(fromJson);
+}
+
+@JsonSerializable()
+class ExchangedReturnedOAuthAuthCode implements Serializable<Map<String,dynamic>>{
+  @JsonKey(required: true, name: 'auth_code')
+  String authCodeId;
+
+  @JsonKey(required: true, name: 'challenge_type', fromJson: AuthCodeChallengeTypes.fromJson, toJson: Serializable.convertToDynamicSerialized)
+  AuthCodeChallengeTypes challengeType; 
+
+  @JsonKey(required: true, name: 'client_id')
+  String appClientId;
+
+  @JsonKey(required: true, name: 'oauth_permission')
+  OAuthPermissionInfo oAuthPermission;
+
+  @JsonKey(required: true, name: 'time_info')
+  ExpirableInfo expirableInfo;
+
+  @JsonKey(required: true, name: 'user_unique_id')
+  String userUniqueId;
+
+  @JsonKey(required: true, name: 'exchange_method', toJson: Serializable.convertToDynamicSerialized, fromJson: ExchangeMethod.fromJson)
+  ExchangeMethod exchangeMethod;
+
+  @override
+  Map<String,dynamic> serialize([String? locale]) => _$ExchangedReturnedOAuthAuthCodeToJson(this);
+
+  @override
+  Map<String,dynamic> toJson() => serialize(null);
+
+  ExchangedReturnedOAuthAuthCode({
+    required this.authCodeId, 
+    required this.challengeType, 
+    required this.appClientId, 
+    required this.oAuthPermission, 
+    required this.expirableInfo, 
+    required this.userUniqueId, 
+    required this.exchangeMethod
+  });
+
+  factory ExchangedReturnedOAuthAuthCode.fromMap(Map<String,dynamic> map) => _$ExchangedReturnedOAuthAuthCodeFromJson(map);
+  static ExchangedReturnedOAuthAuthCode fromJson(Map<String,dynamic> json) => ExchangedReturnedOAuthAuthCode.fromMap(json);
+  static ExchangedReturnedOAuthAuthCode? fromJsonNullable(Map<String,dynamic>? json){
+    if(json == null){
+      return null;
+    }else{
+      return fromJson(json);
+    }
+  }
+  static Map<String,dynamic> staticSerialize(ExchangedReturnedOAuthAuthCode code) => code.toJson();
+  static final staticSerializeWithSettings = ssoConvertToExchangeFormatFunc(staticSerialize);
+  static final staticDeserializeWithSettings = ssoConvertToExchangeFormatFunc(fromJson);
 }
 
 @JsonSerializable()
@@ -72,17 +132,32 @@ class ExchangeOAuthTokenRequiredRequest{
 
   ExchangeOAuthTokenRequiredRequest({required this.oAuthAccessToken, required this.userUniqueId, required this.appClientId});
 
-  static Map<String,dynamic> staticSerialize<FineSetting extends InteractiveSSOExchangeSharedSetting>
+  static Map<String,dynamic> staticSerialize
   (
-    ExchangeOAuthTokenRequiredRequest request,
-    FineSetting sharedSettings
+    ExchangeOAuthTokenRequiredRequest request
   ) => _$ExchangeOAuthTokenRequiredRequestToJson(request);
 
-  static ExchangeOAuthTokenRequiredRequest staticDeserialize<FineSetting extends InteractiveSSOExchangeSharedSetting>
+  static ExchangeOAuthTokenRequiredRequest staticDeserialize
   (
-    Map<String,dynamic> map,
-    FineSetting sharedSettings
+    Map<String,dynamic> map
   ) => _$ExchangeOAuthTokenRequiredRequestFromJson(map);
+  static Set<String>? staticValidate(ExchangeOAuthTokenRequiredRequest req) {
+    Set<String> retList = {};
+    if(req.appClientId.isEmpty){
+      retList.add('client_id');
+    }
+    if(req.oAuthAccessToken.isEmpty){
+      retList.add('oauth_access_token');
+    }
+    if(req.userUniqueId.isEmpty){
+      retList.add('user_unique_id');
+    }
+    return retList.isEmpty ? null : retList;
+  }
+
+  static final staticSerializeWithSettings = ssoConvertToExchangeFormatFunc(staticSerialize);
+  static final staticDeserializeWithSettings = ssoConvertToExchangeFormatFunc(staticDeserialize);
+  static final staticValidateWithSettings = ssoConvertToExchangeFormatFunc(staticValidate);
 
   static void appendSerialize(Map<String,dynamic> appendTo, ExchangeOAuthTokenRequiredRequest request){
     appendTo['oauth_access_token'] = request.oAuthAccessToken;
@@ -102,17 +177,32 @@ class ExchangeOAuthRefreshTokenRequiredRequest{
 
   ExchangeOAuthRefreshTokenRequiredRequest({required this.oAuthRefreshToken, required this.userUniqueId, required this.appClientId});
 
-  static Map<String,dynamic> staticSerialize<FineSetting extends InteractiveSSOExchangeSharedSetting>
+  static Map<String,dynamic> staticSerialize
   (
-    ExchangeOAuthRefreshTokenRequiredRequest request,
-    FineSetting sharedSettings
+    ExchangeOAuthRefreshTokenRequiredRequest request
   ) => _$ExchangeOAuthRefreshTokenRequiredRequestToJson(request);
 
-  static ExchangeOAuthRefreshTokenRequiredRequest staticDeserialize<FineSetting extends InteractiveSSOExchangeSharedSetting>
+  static ExchangeOAuthRefreshTokenRequiredRequest staticDeserialize
   (
-    Map<String,dynamic> map,
-    FineSetting sharedSettings
+    Map<String,dynamic> map
   ) => _$ExchangeOAuthRefreshTokenRequiredRequestFromJson(map);
+  static Set<String>? staticValidate(ExchangeOAuthRefreshTokenRequiredRequest req) {
+    Set<String> retList = {};
+    if(req.appClientId.isEmpty){
+      retList.add('client_id');
+    }
+    if(req.oAuthRefreshToken.isEmpty){
+      retList.add('oauth_refresh_token');
+    }
+    if(req.userUniqueId.isEmpty){
+      retList.add('user_unique_id');
+    }
+    return retList.isEmpty ? null : retList;
+  }
+
+  static final staticSerializeWithSettings = ssoConvertToExchangeFormatFunc(staticSerialize);
+  static final staticDeserializeWithSettings = ssoConvertToExchangeFormatFunc(staticDeserialize);
+  static final staticValidateWithSettings = ssoConvertToExchangeFormatFunc(staticValidate);
 
   static void appendSerialize(Map<String,dynamic> appendTo, ExchangeOAuthRefreshTokenRequiredRequest request){
     appendTo['oauth_refresh_token'] = request.oAuthRefreshToken;

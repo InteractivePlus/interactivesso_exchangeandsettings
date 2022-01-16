@@ -67,6 +67,9 @@ class EditAppInfoRequest implements ExchangedVerificationCodeRequiredRequest, Ex
     if(tokenRst != null){
       retList.addAll(tokenRst);
     }
+    if(req.appClientId.isEmpty){
+      retList.add('client_id');
+    }
     if(!req.displayName.validate() || (req.displayName.changeValue && !sharedSettings.validatorSettings.appSystemValidators.appDisplayNameValidator.validate(req.displayName.value!))){
       retList.add('display_name');
     }

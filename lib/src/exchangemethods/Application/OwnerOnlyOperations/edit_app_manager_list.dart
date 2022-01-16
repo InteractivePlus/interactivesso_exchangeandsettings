@@ -53,6 +53,9 @@ class EditAppManageListRequest implements ExchangedVerificationCodeRequiredReque
     if(tokenRst != null){
       retList.addAll(tokenRst);
     }
+    if(req.appClientId.isEmpty){
+      retList.add('client_id');
+    }
     return retList.isEmpty ? null : retList;
   }
   static final staticSerializeWithSettings = ssoConvertToExchangeFormatFunc(staticSerialize);
