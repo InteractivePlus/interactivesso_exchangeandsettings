@@ -74,7 +74,7 @@ InteractiveSSOExchangeFormat<GrantAuthCodeRequest, ExchangedReturnedOAuthAuthCod
     method: ExchangeHTTPMethod.POST, 
     successfulHTTPCode: 201, 
     possibleHTTPCodes: [201, 400, 403, 500], 
-    relativePathWithParameterMarkedWithLtAndGtSymbols: 'user/<user_unique_id>/apps/<client_id>/oauth_auth_code'
+    relativePathWithParameterMarkedWithLtAndGtSymbols: 'apps/<client_id>/user/<user_unique_id>/oauth_auth_code'
   ), 
   rateLimitMetaData: const ExchangeRateLimitMetaData(
     numRequestPerUserPerMin: 3

@@ -6,10 +6,10 @@ part 'searchentitylimitedrequest.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class ExchangeSearchEntityLimitedRequest{
-  @JsonKey(required: true, name: 'search_offset')
+  @JsonKey(name: 'search_offset')
   int searchOffset;
 
-  @JsonKey(required: true, name: 'search_limit')
+  @JsonKey(name: 'search_limit')
   int? searchLimit;
 
   ExchangeSearchEntityLimitedRequest({this.searchOffset = 0, this.searchLimit});

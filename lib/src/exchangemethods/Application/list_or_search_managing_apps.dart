@@ -50,7 +50,7 @@ InteractiveSSOExchangeFormat<ListOrSearchManagingAppsRequest, ExchangeSearchAPPR
     method: ExchangeHTTPMethod.GET, 
     successfulHTTPCode: 200, 
     possibleHTTPCodes: [200, 400, 403, 500], 
-    relativePathWithParameterMarkedWithLtAndGtSymbols: '/user/<user_unique_id>/apps'
+    relativePathWithParameterMarkedWithLtAndGtSymbols: 'user/<user_unique_id>/apps'
   ), 
   rateLimitMetaData: const ExchangeRateLimitMetaData(
     numRequestPerUserPerMin: 15

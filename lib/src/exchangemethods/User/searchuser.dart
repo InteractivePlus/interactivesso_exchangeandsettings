@@ -25,7 +25,7 @@ class SearchUserRequest implements ExchangeUserTokenRequiredRequest, ExchangeSea
   @override
   int? searchLimit;
 
-  @JsonKey(required: true, name: 'search_offset')
+  @JsonKey(name: 'search_offset')
   @override
   int searchOffset;
 

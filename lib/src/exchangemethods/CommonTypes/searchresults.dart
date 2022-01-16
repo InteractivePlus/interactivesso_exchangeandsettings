@@ -1,5 +1,6 @@
 import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedappinfo.dart';
+import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedoauthtoken.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returneduserentity.dart';
 import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 
@@ -14,3 +15,9 @@ Map<String,dynamic> exchangeSearchSimpleUserResultStaticSerialize(ExchangeSearch
 ExchangeSearchSimpleUserResult exchangeSearchSimpleUserResultStaticDeserialize(Map<String,dynamic> serialized) => SearchResult.fromJson<ExchangedSimpleUserInfo>(serialized, ExchangedSimpleUserInfo.fromJson);
 final exchangeSearchSimpleUserResultStaticSerializeWithSettings = ssoConvertToExchangeFormatFunc(exchangeSearchSimpleUserResultStaticSerialize);
 final exchangeSearchSimpleUserResultStaticDeserializeWithSettings = ssoConvertToExchangeFormatFunc(exchangeSearchSimpleUserResultStaticDeserialize);
+
+typedef ExchangeSearchOAuthTokenResult = SearchResult<ExchangedReturnedOAuthToken>;
+Map<String,dynamic> exchangeSearchOAuthTokenResultStaticSerialize(ExchangeSearchOAuthTokenResult rst) => rst.toJson();
+ExchangeSearchOAuthTokenResult exchangeSearchOAuthTokenResultStaticDeserialize(Map<String,dynamic> serialized) => SearchResult.fromJson<ExchangedReturnedOAuthToken>(serialized, ExchangedReturnedOAuthToken.fromJson);
+final exchangeSearchOAuthTokenResultStaticSerializeWithSettings = ssoConvertToExchangeFormatFunc(exchangeSearchOAuthTokenResultStaticSerialize);
+final exchangeSearchOAuthTokenResultStaticDeserializeWithSettings = ssoConvertToExchangeFormatFunc(exchangeSearchOAuthTokenResultStaticDeserialize);
