@@ -60,7 +60,7 @@ InteractiveSSOExchangeFormat<CreateApplicationRequest, ExchangedReturnedAppInfo,
     method: ExchangeHTTPMethod.POST, 
     successfulHTTPCode: 201, 
     possibleHTTPCodes: [201, 400, 403, 409, 500], 
-    relativePathWithParameterMarkedWithLtAndGtSymbols: '/user/<user_unique_id>/apps/<display_name>'
+    relativePathWithParameterMarkedWithLtAndGtSymbols: 'user/<user_unique_id>/apps/<display_name>'
   ), 
   rateLimitMetaData: const ExchangeRateLimitMetaData(
     numRequestPerUserPerMin: 1
