@@ -4,10 +4,10 @@ import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTyp
 import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'edit_oauth_app_scopes.g.dart';
+part 'edit_or_create_oauth_authorization.g.dart';
 
 @JsonSerializable()
-class EditOAuthTokenScopesRequest implements ExchangeUserTokenRequiredRequest{
+class EditOrCreateOAuthAuthorizationRequest implements ExchangeUserTokenRequiredRequest{
   @JsonKey(required: true, name: 'user_access_token')
   @override
   String userAccessToken;
@@ -22,12 +22,12 @@ class EditOAuthTokenScopesRequest implements ExchangeUserTokenRequiredRequest{
   @JsonKey(required: true, name: 'oauth_setting')
   OAuthPermissionInfo tokenSetting;
 
-  EditOAuthTokenScopesRequest({required this.userAccessToken, required this.userUniqueId, required this.appClientId, required this.tokenSetting});
-  factory EditOAuthTokenScopesRequest.fromJson(Map<String,dynamic> json) => _$EditOAuthTokenScopesRequestFromJson(json);
-  Map<String,dynamic> toJson() => _$EditOAuthTokenScopesRequestToJson(this);
-  static Map<String,dynamic> staticSerialize(EditOAuthTokenScopesRequest req) => req.toJson();
-  static EditOAuthTokenScopesRequest staticDeserialize(Map<String,dynamic> serialized) => EditOAuthTokenScopesRequest.fromJson(serialized);
-  static Set<String>? staticValidate(EditOAuthTokenScopesRequest req){
+  EditOrCreateOAuthAuthorizationRequest({required this.userAccessToken, required this.userUniqueId, required this.appClientId, required this.tokenSetting});
+  factory EditOrCreateOAuthAuthorizationRequest.fromJson(Map<String,dynamic> json) => _$EditOrCreateOAuthAuthorizationRequestFromJson(json);
+  Map<String,dynamic> toJson() => _$EditOrCreateOAuthAuthorizationRequestToJson(this);
+  static Map<String,dynamic> staticSerialize(EditOrCreateOAuthAuthorizationRequest req) => req.toJson();
+  static EditOrCreateOAuthAuthorizationRequest staticDeserialize(Map<String,dynamic> serialized) => EditOrCreateOAuthAuthorizationRequest.fromJson(serialized);
+  static Set<String>? staticValidate(EditOrCreateOAuthAuthorizationRequest req){
     Set<String> retList = {};
     var userTokenRst = ExchangeUserTokenRequiredRequest.validate(req);
     if(userTokenRst != null){
@@ -43,18 +43,18 @@ class EditOAuthTokenScopesRequest implements ExchangeUserTokenRequiredRequest{
   static final staticValidateWithSettings = ssoConvertToExchangeFormatFunc(staticValidate);
 }
 
-InteractiveSSOExchangeFormat<EditOAuthTokenScopesRequest, void, void, Map<String,dynamic>, void, void> editOAuthAppScopesAPI = ExchangeFormat(
-  exchangeProtocolName: 'editOAuthAppScopesAPI', 
+InteractiveSSOExchangeFormat<EditOrCreateOAuthAuthorizationRequest, void, void, Map<String,dynamic>, void, void> editOrCreateOAuthAuthorizationAPI = ExchangeFormat(
+  exchangeProtocolName: 'editOrCreateOAuthAuthorizationAPI', 
   httpMetaData: const ExchangeHTTPMetaData(
-    method: ExchangeHTTPMethod.PATCH, 
+    method: ExchangeHTTPMethod.PUT, 
     successfulHTTPCode: 200, 
     possibleHTTPCodes: [200, 400, 403, 500], 
     relativePathWithParameterMarkedWithLtAndGtSymbols: 'apps/<client_id>/user/<user_unique_id>/oauth_scopes'
   ), 
   rateLimitMetaData: const ExchangeRateLimitMetaData(), 
-  parseRequest: EditOAuthTokenScopesRequest.staticDeserializeWithSettings, 
-  serializeRequest: EditOAuthTokenScopesRequest.staticSerializeWithSettings,
-  validateRequest: EditOAuthTokenScopesRequest.staticValidateWithSettings, 
+  parseRequest: EditOrCreateOAuthAuthorizationRequest.staticDeserializeWithSettings, 
+  serializeRequest: EditOrCreateOAuthAuthorizationRequest.staticSerializeWithSettings,
+  validateRequest: EditOrCreateOAuthAuthorizationRequest.staticValidateWithSettings, 
   parseSuccessResponseData: ssoExchangeVoidToVoidFunc, 
   parseFailedResponseData: ssoExchangeVoidToVoidFunc, 
   serializeSuccessResponseData: ssoExchangeVoidToVoidFunc, 
