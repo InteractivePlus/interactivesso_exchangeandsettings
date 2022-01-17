@@ -49,7 +49,7 @@ InteractiveSSOExchangeFormat<EditOrCreateOAuthAuthorizationRequest, void, void, 
     method: ExchangeHTTPMethod.PUT, 
     successfulHTTPCode: 200, 
     possibleHTTPCodes: [200, 400, 403, 500], 
-    relativePathWithParameterMarkedWithLtAndGtSymbols: 'apps/<client_id>/user/<user_unique_id>/oauth_scopes'
+    relativePathWithParameterMarkedWithLtAndGtSymbols: 'apps/<client_id>/user/<user_unique_id>/oauth_authorization'
   ), 
   rateLimitMetaData: const ExchangeRateLimitMetaData(), 
   parseRequest: EditOrCreateOAuthAuthorizationRequest.staticDeserializeWithSettings, 
