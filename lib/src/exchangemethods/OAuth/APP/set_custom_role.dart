@@ -16,10 +16,14 @@ class SetCustomRoleRequest{
   @JsonKey(required:true, name: 'client_secret')
   String appClientSecret;
 
+  @JsonKey(required:true, name: 'custom_role')
+  int? customRole;
+
   SetCustomRoleRequest({
     required this.appClientId,
     required this.userUniqueId,
-    required this.appClientSecret
+    required this.appClientSecret,
+    required this.customRole
   });
   factory SetCustomRoleRequest.fromJson(Map<String,dynamic> json) => _$SetCustomRoleRequestFromJson(json);
   Map<String,dynamic> toJson() => _$SetCustomRoleRequestToJson(this);

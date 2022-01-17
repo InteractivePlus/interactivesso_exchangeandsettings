@@ -1,5 +1,6 @@
 
 import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
+import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedoauthtoken.dart';
 import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -46,7 +47,7 @@ class VerifyOAuthTokenRequest implements ExchangeOAuthTokenRequiredRequest{
   static final staticValidateWithSettings = ssoConvertToExchangeFormatFunc(staticValidate);
 }
 
-InteractiveSSOExchangeFormat<VerifyOAuthTokenRequest, ExchangedReturnedOAuthToken, void, Map<String,dynamic>, Map<String,dynamic>, void> verifyOAuthTokenAPI = ExchangeFormat(
+InteractiveSSOExchangeFormat<VerifyOAuthTokenRequest, UserOAuthAuthorization, void, Map<String,dynamic>, Map<String,dynamic>, void> verifyOAuthTokenAPI = ExchangeFormat(
   exchangeProtocolName: 'verifyOAuthTokenAPI', 
   httpMetaData: const ExchangeHTTPMetaData(
     method: ExchangeHTTPMethod.GET, 
@@ -59,9 +60,9 @@ InteractiveSSOExchangeFormat<VerifyOAuthTokenRequest, ExchangedReturnedOAuthToke
     parseRequest: VerifyOAuthTokenRequest.staticDeserializeWithSettings, 
     serializeRequest: VerifyOAuthTokenRequest.staticSerializeWithSettings, 
     validateRequest: VerifyOAuthTokenRequest.staticValidateWithSettings, 
-    parseSuccessResponseData: ExchangedReturnedOAuthToken.staticDeserializeWithSettings, 
+    parseSuccessResponseData: ssoConvertToExchangeFormatFunc(UserOAuthAuthorization.fromJson), 
     parseFailedResponseData: ssoExchangeVoidToVoidFunc, 
-    serializeSuccessResponseData: ExchangedReturnedOAuthToken.staticSerializeWithSettings, 
+    serializeSuccessResponseData: ssoConvertToExchangeFormatFunc((UserOAuthAuthorization auth) => auth.toJson()), 
     serializeFailedResponseData: ssoExchangeVoidToVoidFunc, 
     requireVerificationCode: false
   );

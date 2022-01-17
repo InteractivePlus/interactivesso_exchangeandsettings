@@ -3,10 +3,10 @@ import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTyp
 import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'revoke_oauth_token.g.dart';
+part 'revoke_oauth_authorization.g.dart';
 
 @JsonSerializable()
-class RevokeOAuthTokenRequest implements ExchangeUserTokenRequiredRequest{
+class RevokeOAuthAuthorizationRequest implements ExchangeUserTokenRequiredRequest{
   @JsonKey(required: true, name: 'user_access_token')
   @override
   String userAccessToken;
@@ -18,12 +18,12 @@ class RevokeOAuthTokenRequest implements ExchangeUserTokenRequiredRequest{
   @JsonKey(required: true, name: 'client_id')
   String appClientId;
 
-  RevokeOAuthTokenRequest({required this.userAccessToken, required this.userUniqueId, required this.appClientId});
-  factory RevokeOAuthTokenRequest.fromJson(Map<String,dynamic> json) => _$RevokeOAuthTokenRequestFromJson(json);
-  Map<String,dynamic> toJson() => _$RevokeOAuthTokenRequestToJson(this);
-  static Map<String,dynamic> staticSerialize(RevokeOAuthTokenRequest req) => req.toJson();
-  static RevokeOAuthTokenRequest staticDeserialize(Map<String,dynamic> serialized) => RevokeOAuthTokenRequest.fromJson(serialized);
-  static Set<String>? staticValidate(RevokeOAuthTokenRequest req){
+  RevokeOAuthAuthorizationRequest({required this.userAccessToken, required this.userUniqueId, required this.appClientId});
+  factory RevokeOAuthAuthorizationRequest.fromJson(Map<String,dynamic> json) => _$RevokeOAuthAuthorizationRequestFromJson(json);
+  Map<String,dynamic> toJson() => _$RevokeOAuthAuthorizationRequestToJson(this);
+  static Map<String,dynamic> staticSerialize(RevokeOAuthAuthorizationRequest req) => req.toJson();
+  static RevokeOAuthAuthorizationRequest staticDeserialize(Map<String,dynamic> serialized) => RevokeOAuthAuthorizationRequest.fromJson(serialized);
+  static Set<String>? staticValidate(RevokeOAuthAuthorizationRequest req){
     Set<String> retList = {};
     var userTokenRst = ExchangeUserTokenRequiredRequest.validate(req);
     if(userTokenRst != null){
@@ -39,18 +39,18 @@ class RevokeOAuthTokenRequest implements ExchangeUserTokenRequiredRequest{
   static final staticValidateWithSettings = ssoConvertToExchangeFormatFunc(staticValidate);
 }
 
-InteractiveSSOExchangeFormat<RevokeOAuthTokenRequest, void, void, Map<String,dynamic>, void, void> revokeOAuthTokenAPI = ExchangeFormat(
-  exchangeProtocolName: 'revokeOAuthTokenAPI', 
+InteractiveSSOExchangeFormat<RevokeOAuthAuthorizationRequest, void, void, Map<String,dynamic>, void, void> revokeOAuthAuthorizationAPI = ExchangeFormat(
+  exchangeProtocolName: 'revokeOAuthAuthorizationAPI', 
   httpMetaData: const ExchangeHTTPMetaData(
     method: ExchangeHTTPMethod.DELETE, 
     successfulHTTPCode: 204, 
     possibleHTTPCodes: [204, 400, 403, 500], 
-    relativePathWithParameterMarkedWithLtAndGtSymbols: 'apps/<client_id>/user/<user_unique_id>/oauth_tokens'
+    relativePathWithParameterMarkedWithLtAndGtSymbols: 'apps/<client_id>/user/<user_unique_id>/oauth_authorization'
   ), 
   rateLimitMetaData: const ExchangeRateLimitMetaData(), 
-  parseRequest: RevokeOAuthTokenRequest.staticDeserializeWithSettings, 
-  serializeRequest: RevokeOAuthTokenRequest.staticSerializeWithSettings,
-  validateRequest: RevokeOAuthTokenRequest.staticValidateWithSettings, 
+  parseRequest: RevokeOAuthAuthorizationRequest.staticDeserializeWithSettings, 
+  serializeRequest: RevokeOAuthAuthorizationRequest.staticSerializeWithSettings,
+  validateRequest: RevokeOAuthAuthorizationRequest.staticValidateWithSettings, 
   parseSuccessResponseData: ssoExchangeVoidToVoidFunc, 
   parseFailedResponseData: ssoExchangeVoidToVoidFunc, 
   serializeSuccessResponseData: ssoExchangeVoidToVoidFunc, 

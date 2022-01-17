@@ -1,4 +1,5 @@
 import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
+import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedoauthtoken.dart';
 import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -51,7 +52,30 @@ class RequestOAuthTokenRequest{
   static final staticValidateWithSettings = ssoConvertToExchangeFormatFunc(staticValidate);
 }
 
-InteractiveSSOExchangeFormat<RequestOAuthTokenRequest, ExchangedReturnedOAuthToken, void, Map<String,dynamic>, Map<String,dynamic>, void> requestOAuthTokenAPI = ExchangeFormat(
+@JsonSerializable()
+class RequestOAuthTokenSuccessfulResponse implements Serializable<Map<String,dynamic>>{
+  @JsonKey(required: true, name: 'oauth_token')
+  ExchangedReturnedOAuthToken oAuthToken;
+  @JsonKey(required: true, name: 'oauth_authorization')
+  ExchangedReturnedOAuthUserAuthorization oAuthAuthorization;
+  RequestOAuthTokenSuccessfulResponse({
+    required this.oAuthToken,
+    required this.oAuthAuthorization
+  });
+  factory RequestOAuthTokenSuccessfulResponse.fromMap(Map<String,dynamic> map) => _$RequestOAuthTokenSuccessfulResponseFromJson(map);
+  static RequestOAuthTokenSuccessfulResponse fromJson(Map<String,dynamic> json) => RequestOAuthTokenSuccessfulResponse.fromMap(json);
+  static RequestOAuthTokenSuccessfulResponse? fromJsonNullable(Map<String,dynamic>? json) => json == null ? null : fromJson(json);
+  @override
+  Map<String, dynamic> serialize([String? locale]) => _$RequestOAuthTokenSuccessfulResponseToJson(this);
+  @override
+  Map<String, dynamic> toJson() => serialize();
+  static Map<String, dynamic> staticSerialize(RequestOAuthTokenSuccessfulResponse res) => res.toJson();
+  static RequestOAuthTokenSuccessfulResponse staticDeserialize(Map<String,dynamic> serialized) => RequestOAuthTokenSuccessfulResponse.fromJson(serialized);
+  static final staticSerializeWithSettings = ssoConvertToExchangeFormatFunc(staticSerialize);
+  static final staticDeserializeWithSettings = ssoConvertToExchangeFormatFunc(staticDeserialize);
+}
+
+InteractiveSSOExchangeFormat<RequestOAuthTokenRequest, RequestOAuthTokenSuccessfulResponse, void, Map<String,dynamic>, Map<String,dynamic>, void> requestOAuthTokenAPI = ExchangeFormat(
   exchangeProtocolName: 'requestOAuthTokenAPI', 
   httpMetaData: const ExchangeHTTPMetaData(
     method: ExchangeHTTPMethod.POST, 
@@ -65,9 +89,9 @@ InteractiveSSOExchangeFormat<RequestOAuthTokenRequest, ExchangedReturnedOAuthTok
   parseRequest: RequestOAuthTokenRequest.staticDeserializeWithSettings, 
   serializeRequest: RequestOAuthTokenRequest.staticSerializeWithSettings,
   validateRequest: RequestOAuthTokenRequest.staticValidateWithSettings, 
-  parseSuccessResponseData: ExchangedReturnedOAuthToken.staticDeserializeWithSettings, 
+  parseSuccessResponseData: RequestOAuthTokenSuccessfulResponse.staticDeserializeWithSettings, 
   parseFailedResponseData: ssoExchangeVoidToVoidFunc, 
-  serializeSuccessResponseData: ExchangedReturnedOAuthToken.staticSerializeWithSettings, 
+  serializeSuccessResponseData: RequestOAuthTokenSuccessfulResponse.staticSerializeWithSettings, 
   serializeFailedResponseData: ssoExchangeVoidToVoidFunc, 
   requireVerificationCode: false
 );

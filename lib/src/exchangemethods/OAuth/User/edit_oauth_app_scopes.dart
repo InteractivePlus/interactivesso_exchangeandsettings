@@ -4,7 +4,7 @@ import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTyp
 import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'edit_oauth_token_scopes.g.dart';
+part 'edit_oauth_app_scopes.g.dart';
 
 @JsonSerializable()
 class EditOAuthTokenScopesRequest implements ExchangeUserTokenRequiredRequest{
@@ -43,8 +43,8 @@ class EditOAuthTokenScopesRequest implements ExchangeUserTokenRequiredRequest{
   static final staticValidateWithSettings = ssoConvertToExchangeFormatFunc(staticValidate);
 }
 
-InteractiveSSOExchangeFormat<EditOAuthTokenScopesRequest, void, void, Map<String,dynamic>, void, void> editOAuthTokenScopesAPI = ExchangeFormat(
-  exchangeProtocolName: 'editOAuthTokenScopesAPI', 
+InteractiveSSOExchangeFormat<EditOAuthTokenScopesRequest, void, void, Map<String,dynamic>, void, void> editOAuthAppScopesAPI = ExchangeFormat(
+  exchangeProtocolName: 'editOAuthAppScopesAPI', 
   httpMetaData: const ExchangeHTTPMetaData(
     method: ExchangeHTTPMethod.PATCH, 
     successfulHTTPCode: 200, 

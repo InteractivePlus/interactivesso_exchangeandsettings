@@ -69,7 +69,7 @@ class ExchangedUserEntity implements Serializable<Map<String,dynamic>>{
     this.phoneNumber, 
     required this.accountCreateInfo,
     required this.permission,
-    this.accountStatus = AccountStatus.NORMAL, 
+    required this.accountStatus, 
     this.emailVerified = false,
     this.phoneVerified = false,
     this.nickname,

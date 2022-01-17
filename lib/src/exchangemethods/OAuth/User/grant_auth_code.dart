@@ -20,9 +20,6 @@ class GrantAuthCodeRequest implements ExchangeUserTokenRequiredRequest{
 
   @JsonKey(required:  true, name: 'client_id')
   String appClientId;
-  
-  @JsonKey(required: true, name: 'oauth_setting')
-  OAuthPermissionInfo oAuthSetting;
 
   @JsonKey(required: true, name: 'exchange_method', toJson: Serializable.convertToDynamicSerialized, fromJson: ExchangeMethod.fromJson)
   ExchangeMethod oAuthExchangeMethod;
@@ -37,7 +34,6 @@ class GrantAuthCodeRequest implements ExchangeUserTokenRequiredRequest{
     required this.userUniqueId,
     required this.userAccessToken,
     required this.appClientId,
-    required this.oAuthSetting,
     required this.oAuthChallengeType,
     required this.oAuthExchangeMethod,
     this.challenge

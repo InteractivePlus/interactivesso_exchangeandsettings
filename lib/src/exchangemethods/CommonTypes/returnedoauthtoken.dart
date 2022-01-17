@@ -26,20 +26,11 @@ class ExchangedReturnedOAuthToken implements Serializable<Map<String,dynamic>>{
   @JsonKey(required:true, name: 'exchange_method', toJson: Serializable.convertToDynamicSerialized, fromJson: ExchangeMethod.fromJson)
   ExchangeMethod exchangeMethod;
 
-  @JsonKey(required: true, name: 'oauth_perm')
-  OAuthPermissionInfo tokenPermission;
-
-  @JsonKey(required: true, name: 'oauth_setting')
-  OAuthPermissionInfo tokenSetting;
-
   @JsonKey(required: true, name: 'user_unique_id')
   String userUniqueId;
 
   @JsonKey(required: true, name: 'client_id')
   String appClientId;
-
-  @JsonKey(name: 'custom_role')
-  int? customRole;
 
   @override
   Map<String, dynamic> serialize([String? locale]) => _$ExchangedReturnedOAuthTokenToJson(this);
@@ -55,10 +46,7 @@ class ExchangedReturnedOAuthToken implements Serializable<Map<String,dynamic>>{
     required this.refreshToken,
     required this.refreshTokenExpires,
     required this.valid,
-    required this.exchangeMethod,
-    required this.tokenPermission,
-    required this.tokenSetting,
-    this.customRole
+    required this.exchangeMethod
   });
   factory ExchangedReturnedOAuthToken.fromMap(Map<String,dynamic> map) => _$ExchangedReturnedOAuthTokenFromJson(map);
   static ExchangedReturnedOAuthToken fromJson(Map<String,dynamic> json) => ExchangedReturnedOAuthToken.fromMap(json);
@@ -79,9 +67,6 @@ class ExchangedReturnedOAuthAuthCode implements Serializable<Map<String,dynamic>
   @JsonKey(required: true, name: 'client_id')
   String appClientId;
 
-  @JsonKey(required: true, name: 'oauth_permission')
-  OAuthPermissionInfo oAuthPermission;
-
   @JsonKey(required: true, name: 'time_info')
   ExpirableInfo expirableInfo;
 
@@ -101,7 +86,6 @@ class ExchangedReturnedOAuthAuthCode implements Serializable<Map<String,dynamic>
     required this.authCodeId, 
     required this.challengeType, 
     required this.appClientId, 
-    required this.oAuthPermission, 
     required this.expirableInfo, 
     required this.userUniqueId, 
     required this.exchangeMethod
@@ -119,6 +103,42 @@ class ExchangedReturnedOAuthAuthCode implements Serializable<Map<String,dynamic>
   static Map<String,dynamic> staticSerialize(ExchangedReturnedOAuthAuthCode code) => code.toJson();
   static final staticSerializeWithSettings = ssoConvertToExchangeFormatFunc(staticSerialize);
   static final staticDeserializeWithSettings = ssoConvertToExchangeFormatFunc(fromJson);
+}
+
+@JsonSerializable()
+class ExchangedReturnedOAuthUserAuthorization implements Serializable<Map<String,dynamic>>{
+  @JsonKey(required: true, name: 'oauth_setting')
+  OAuthPermissionInfo authorizedOAuthSetting;
+
+  @JsonKey(required: true, name: 'oauth_permission')
+  OAuthPermissionInfo oAuthPermissionOverall;
+
+  @JsonKey(required: true, name: 'client_id')
+  String appClientId;
+
+  @JsonKey(required: true, name: 'user_unique_id')
+  String userUniqueId;
+
+  @JsonKey(name: 'custom_role')
+  int? customRole;
+
+  ExchangedReturnedOAuthUserAuthorization({
+    required this.authorizedOAuthSetting,
+    required this.oAuthPermissionOverall,
+    required this.appClientId,
+    required this.userUniqueId
+  });
+  factory ExchangedReturnedOAuthUserAuthorization.fromMap(Map<String,dynamic> json) => _$ExchangedReturnedOAuthUserAuthorizationFromJson(json);
+  static ExchangedReturnedOAuthUserAuthorization fromJson(Map<String,dynamic> json) => ExchangedReturnedOAuthUserAuthorization.fromMap(json);
+  static ExchangedReturnedOAuthUserAuthorization? fromJsonNullable(Map<String,dynamic>? json) => json == null ? null : fromJson(json);
+  @override  
+  Map<String,dynamic> toJson() => _$ExchangedReturnedOAuthUserAuthorizationToJson(this);
+  @override
+  Map<String, dynamic> serialize([String? locale]) => toJson();
+  static Map<String,dynamic> staticSerialize(ExchangedReturnedOAuthUserAuthorization ins) => ins.toJson();
+  static final staticDeserialize = fromJson;
+  static final staticSerializeWithSettings = ssoConvertToExchangeFormatFunc(staticSerialize);
+  static final staticDeserializeWithSettings = ssoConvertToExchangeFormatFunc(staticDeserialize);
 }
 
 @JsonSerializable()
