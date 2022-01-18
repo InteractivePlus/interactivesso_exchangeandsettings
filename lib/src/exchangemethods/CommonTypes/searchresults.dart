@@ -1,9 +1,10 @@
 import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedappinfo.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedoauthtoken.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returneduserentity.dart';
-import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
+
+import 'returnedappinfo.dart';
+import 'returnedoauthtoken.dart';
+import 'returneduserentity.dart';
+import '../../interface/exchangeformat.dart';
 
 typedef ExchangeSearchAPPResult = SearchResult<ExchangedReturnedAppInfo>;
 Map<String,dynamic> exchangeSearchAPPResultStaticSerialize(ExchangeSearchAPPResult rst) => rst.toJson();

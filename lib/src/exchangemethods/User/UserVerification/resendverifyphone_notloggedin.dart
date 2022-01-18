@@ -1,12 +1,12 @@
 import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
 import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/captcharequiredrequest.dart';
 import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/sendvericoderequest.dart';
-import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
-import 'package:interactivesso_exchangeandsettings/src/setting_objects/sharedsettings.dart';
 
-class ResendVerifyPhoneNotLoggedInRequest<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerialized>> implements ExchangeSendVericodeRequest, ExchangeCaptchaRequiredRequest<CaptchaSerialized, CaptchaInfo>{
+import '../../CommonTypes/captcharequiredrequest.dart';
+import '../../../interface/exchangeformat.dart';
+
+class ResendVerifyPhoneNotLoggedInRequest<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerialized>> implements ExchangeSendVericodeWithPreferredMethodRequest, ExchangeCaptchaRequiredRequest<CaptchaSerialized, CaptchaInfo>{
   @override
   CaptchaInfo captchaInfo;
 

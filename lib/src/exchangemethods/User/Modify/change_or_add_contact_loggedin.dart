@@ -1,15 +1,15 @@
 import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
 import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedtoken.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/sendvericoderequest.dart';
-import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
+import '../../CommonTypes/returnedtoken.dart';
+import '../../CommonTypes/sendvericoderequest.dart';
+import '../../../interface/exchangeformat.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'change_or_add_contact_loggedin.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class ChangeOrAddContactMethodLoggedInRequest implements ExchangeSendVericodeRequest, ExchangeUserTokenRequiredRequest{
+class ChangeOrAddContactMethodLoggedInRequest implements ExchangeSendVericodeWithPreferredMethodRequest, ExchangeUserTokenRequiredRequest{
   @JsonKey(required: true, name: 'user_access_token')
   @override
   String userAccessToken;

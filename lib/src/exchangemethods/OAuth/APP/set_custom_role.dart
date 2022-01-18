@@ -1,7 +1,7 @@
-
 import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
-import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../../../interface/exchangeformat.dart';
 
 part 'set_custom_role.g.dart';
 

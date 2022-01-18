@@ -1,9 +1,10 @@
 import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedappinfo.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedtoken.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/vericoderequiredrequest.dart';
-import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../../CommonTypes/returnedappinfo.dart';
+import '../../CommonTypes/returnedtoken.dart';
+import '../../CommonTypes/vericoderequiredrequest.dart';
+import '../../../interface/exchangeformat.dart';
 
 part 'transfer_app_ownership.g.dart';
 

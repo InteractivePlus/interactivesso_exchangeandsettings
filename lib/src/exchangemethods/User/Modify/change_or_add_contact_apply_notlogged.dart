@@ -1,13 +1,13 @@
 import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/captcharequiredrequest.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returneduserentity.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/sendvericoderequest.dart';
-import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
+import '../../CommonTypes/captcharequiredrequest.dart';
+import '../../CommonTypes/returneduserentity.dart';
+import '../../CommonTypes/sendvericoderequest.dart';
+import '../../../interface/exchangeformat.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 
 
-class ChangeOrAddContactApplyNotLoggedRequest<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerialized>> implements ExchangeSendVericodeRequest, ExchangeCaptchaRequiredRequest<CaptchaSerialized,CaptchaInfo>{
+class ChangeOrAddContactApplyNotLoggedRequest<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerialized>> implements ExchangeSendVericodeWithPreferredMethodRequest, ExchangeCaptchaRequiredRequest<CaptchaSerialized,CaptchaInfo>{
   @override
   CaptchaInfo captchaInfo;
 

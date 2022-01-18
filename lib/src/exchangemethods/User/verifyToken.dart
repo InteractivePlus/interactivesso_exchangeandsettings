@@ -1,7 +1,8 @@
 import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedtoken.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returneduserentity.dart';
-import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
+
+import '../CommonTypes/returnedtoken.dart';
+import '../CommonTypes/returneduserentity.dart';
+import '../../interface/exchangeformat.dart';
 
 InteractiveSSOExchangeFormat<ExchangeUserTokenRequiredRequest, ExchangedUserEntity, void, Map<String,dynamic>, Map<String,dynamic>, void> verifyUserTokenAPI = ExchangeFormat(
   exchangeProtocolName: 'verifyUserTokenAPI', 

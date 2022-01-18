@@ -1,6 +1,6 @@
 
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
-import 'package:interactivesso_exchangeandsettings/src/setting_objects/settingbysystems.dart';
+import 'settingbysystems.dart';
 import 'validatorsettings.dart';
 
 class InteractiveSSOSharedSettings<CaptchaInfoSerialized, CaptchaInfo extends CaptchaSubmitInfo<CaptchaInfoSerialized>>{

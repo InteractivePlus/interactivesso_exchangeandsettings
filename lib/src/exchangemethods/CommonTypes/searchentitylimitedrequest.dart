@@ -1,6 +1,6 @@
-
-import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../../interface/exchangeformat.dart';
 
 part 'searchentitylimitedrequest.g.dart';
 

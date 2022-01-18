@@ -1,13 +1,13 @@
 import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
 import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/captcharequiredrequest.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returneduserentity.dart';
-import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
-import 'package:interactivesso_exchangeandsettings/src/setting_objects/sharedsettings.dart';
-import 'package:interactivesso_exchangeandsettings/src/setting_objects/validatorsbysystem/usersystem.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
+
+import '../CommonTypes/captcharequiredrequest.dart';
+import '../CommonTypes/returneduserentity.dart';
+import '../../interface/exchangeformat.dart';
+
 
 part 'createuser.g.dart';
 
@@ -83,7 +83,7 @@ class CreateUserAPIRequest<CaptchaSerialized, CaptchaInfo extends CaptchaSubmitI
     FineSetting sharedSettings
   ){
     Set<String> returnList = {};
-    UserSystemValidators userSystemValidators = sharedSettings.validatorSettings.userSystemValidators;
+    var userSystemValidators = sharedSettings.validatorSettings.userSystemValidators;
     if(!userSystemValidators.usernameValidator.validate(request.username)){
       returnList.add('username');
     }

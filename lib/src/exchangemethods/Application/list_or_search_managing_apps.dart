@@ -1,8 +1,9 @@
 import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/searchresults.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedtoken.dart';
-import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../CommonTypes/searchresults.dart';
+import '../CommonTypes/returnedtoken.dart';
+import '../../interface/exchangeformat.dart';
 
 part 'list_or_search_managing_apps.g.dart';
 

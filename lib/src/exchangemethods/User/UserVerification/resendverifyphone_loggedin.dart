@@ -1,16 +1,16 @@
 import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
 import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedtoken.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/sendvericoderequest.dart';
-import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
-import 'package:interactivesso_exchangeandsettings/src/setting_objects/sharedsettings.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../../CommonTypes/returnedtoken.dart';
+import '../../CommonTypes/sendvericoderequest.dart';
+import '../../../interface/exchangeformat.dart';
 
 part 'resendverifyphone_loggedin.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class ResendVerifyPhoneLoggedInRequest extends ExchangeUserTokenRequiredRequest implements ExchangeSendVericodeRequest, Serializable<Map<String,dynamic>>{
+class ResendVerifyPhoneLoggedInRequest extends ExchangeUserTokenRequiredRequest implements ExchangeSendVericodeWithPreferredMethodRequest, Serializable<Map<String,dynamic>>{
 
   @JsonKey(name: 'preferred_method', fromJson: CommunicationMethod.fromJsonNullable, toJson: Serializable.convertToDynamicSerializedWithNullable)
   @override

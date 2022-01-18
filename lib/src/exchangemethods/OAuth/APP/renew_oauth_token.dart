@@ -1,7 +1,8 @@
 import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedoauthtoken.dart';
-import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../../CommonTypes/returnedoauthtoken.dart';
+import '../../../interface/exchangeformat.dart';
 
 part 'renew_oauth_token.g.dart';
 

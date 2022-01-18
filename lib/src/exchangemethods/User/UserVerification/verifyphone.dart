@@ -1,6 +1,7 @@
 import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/vericoderequiredrequest.dart';
-import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
+
+import '../../CommonTypes/vericoderequiredrequest.dart';
+import '../../../interface/exchangeformat.dart';
 
 InteractiveSSOExchangeFormat<ExchangedVerificationCodeRequiredRequest,void,void,Map<String,dynamic>,void,void> verifyUserPhoneAPI = ExchangeFormat(
   exchangeProtocolName: 'verifyUserPhoneAPI', 

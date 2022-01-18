@@ -1,8 +1,9 @@
 import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedoauthtoken.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedtoken.dart';
-import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../../CommonTypes/returnedoauthtoken.dart';
+import '../../CommonTypes/returnedtoken.dart';
+import '../../../interface/exchangeformat.dart';
 
 part 'fetch_oauth_authorization.g.dart';
 

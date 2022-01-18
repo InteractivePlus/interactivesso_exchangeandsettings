@@ -1,6 +1,7 @@
 import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedtoken.dart';
-import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
+
+import '../../CommonTypes/returnedtoken.dart';
+import '../../../interface/exchangeformat.dart';
 
 InteractiveSSOExchangeFormat<ExchangeUserTokenRequiredRequest, void, void, Map<String,dynamic>, void, void> resendVerificationEmail_LoggedIn_API = InteractiveSSOExchangeFormat(
   exchangeProtocolName: 'resendVerificationEmail_LoggedIn_API', 

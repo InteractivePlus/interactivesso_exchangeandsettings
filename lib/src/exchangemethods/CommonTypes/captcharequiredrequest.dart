@@ -1,5 +1,6 @@
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
-import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
+
+import '../../interface/exchangeformat.dart';
 
 class ExchangeCaptchaRequiredRequest<CaptchaSerializedInfo,CaptchaInfo extends CaptchaSubmitInfo<CaptchaSerializedInfo>>{
   CaptchaInfo captchaInfo;

@@ -1,7 +1,8 @@
 import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedtoken.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/User/login.dart';
-import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
+
+import '../CommonTypes/returnedtoken.dart';
+import '../../interface/exchangeformat.dart';
+import 'login.dart';
 
 InteractiveSSOExchangeFormat<ExchangeUserRefreshTokenRequiredRequest, UserLoginSuccessfulAPIResponseData, void, Map<String,dynamic>, Map<String,dynamic>, void> refreshUserTokenAPI = ExchangeFormat(
   exchangeProtocolName: 'refreshUserTokenAPI', 

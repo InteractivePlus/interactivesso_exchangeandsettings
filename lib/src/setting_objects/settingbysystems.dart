@@ -1,6 +1,6 @@
-import 'package:interactivesso_exchangeandsettings/src/setting_objects/settingsbysystem/appsystemsetting.dart';
-import 'package:interactivesso_exchangeandsettings/src/setting_objects/settingsbysystem/avatarsystemsetting.dart';
-import 'package:interactivesso_exchangeandsettings/src/setting_objects/settingsbysystem/usersystemsetting.dart';
+import 'settingsbysystem/appsystemsetting.dart';
+import 'settingsbysystem/avatarsystemsetting.dart';
+import 'settingsbysystem/usersystemsetting.dart';
 
 class SettingBySystems{
   final UserSystemSetting userSystemSetting;

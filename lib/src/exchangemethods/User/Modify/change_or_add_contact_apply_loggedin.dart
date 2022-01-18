@@ -2,18 +2,19 @@
 import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
 import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:interactivesso_datatypes/interactivesso_datatypes.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returnedtoken.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/returneduserentity.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/sendvericoderequest.dart';
-import 'package:interactivesso_exchangeandsettings/src/exchangemethods/CommonTypes/vericoderequiredrequest.dart';
-import 'package:interactivesso_exchangeandsettings/src/interface/exchangeformat.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
+
+import '../../CommonTypes/returnedtoken.dart';
+import '../../CommonTypes/returneduserentity.dart';
+import '../../CommonTypes/sendvericoderequest.dart';
+import '../../CommonTypes/vericoderequiredrequest.dart';
+import '../../../interface/exchangeformat.dart';
 
 part 'change_or_add_contact_apply_loggedin.g.dart';
 
 @JsonSerializable()
-class ChangeOrAddContactApplyLoggedInRequest implements ExchangeSendVericodeRequest, ExchangedVerificationCodeRequiredRequest,ExchangeUserTokenRequiredRequest{
+class ChangeOrAddContactApplyLoggedInRequest implements ExchangeSendVericodeWithPreferredMethodRequest, ExchangedVerificationCodeRequiredRequest,ExchangeUserTokenRequiredRequest{
   @JsonKey(required: true, name: 'is_vericode_short_id')
   @override
   bool isVericodeShortId;

@@ -1,4 +1,3 @@
-import 'package:interactiveplus_shared_dart/interactiveplus_shared_dart.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 class RegExpSerializer implements JsonConverter<RegExp,Map<String,dynamic>>{
@@ -12,7 +11,7 @@ class RegExpSerializer implements JsonConverter<RegExp,Map<String,dynamic>>{
     late String source;
 
     if(json['source'] == null || json['source'] is! String){
-      throw InteractivePlusSystemException.SERIALIZATION_EXCEPTION;
+      throw TypeError();
     }else{
       source = json['source'];
     }

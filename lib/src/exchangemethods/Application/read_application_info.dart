@@ -5,10 +5,10 @@ import '../CommonTypes/returnedappinfo.dart';
 import '../CommonTypes/returnedtoken.dart';
 import '../../interface/exchangeformat.dart';
 
-part 'read_application_simple_info.g.dart';
+part 'read_application_info.g.dart';
 
 @JsonSerializable()
-class ReadApplicationSimpleInfoRequest implements ExchangeUserTokenRequiredRequest{
+class ReadApplicationInfoRequest implements ExchangeUserTokenRequiredRequest{
   @JsonKey(required: true, name: 'user_access_token')
   @override
   String userAccessToken;
@@ -20,16 +20,16 @@ class ReadApplicationSimpleInfoRequest implements ExchangeUserTokenRequiredReque
   @JsonKey(required: true, name: 'client_id')
   String appClientId;
 
-  ReadApplicationSimpleInfoRequest({
+  ReadApplicationInfoRequest({
     required this.userUniqueId,
     required this.userAccessToken,
     required this.appClientId
   });
-  factory ReadApplicationSimpleInfoRequest.fromJson(Map<String,dynamic> json) => _$ReadApplicationSimpleInfoRequestFromJson(json);
-  Map<String,dynamic> toJson() => _$ReadApplicationSimpleInfoRequestToJson(this);
-  static Map<String,dynamic> staticSerialize(ReadApplicationSimpleInfoRequest req) => req.toJson();
-  static ReadApplicationSimpleInfoRequest staticDeserialize(Map<String,dynamic> serialized) => ReadApplicationSimpleInfoRequest.fromJson(serialized);
-  static Set<String>? staticValidate(ReadApplicationSimpleInfoRequest req){
+  factory ReadApplicationInfoRequest.fromJson(Map<String,dynamic> json) => _$ReadApplicationInfoRequestFromJson(json);
+  Map<String,dynamic> toJson() => _$ReadApplicationInfoRequestToJson(this);
+  static Map<String,dynamic> staticSerialize(ReadApplicationInfoRequest req) => req.toJson();
+  static ReadApplicationInfoRequest staticDeserialize(Map<String,dynamic> serialized) => ReadApplicationInfoRequest.fromJson(serialized);
+  static Set<String>? staticValidate(ReadApplicationInfoRequest req){
     Set<String> retList = {};
     var tokenRst = ExchangeUserTokenRequiredRequest.validate(req);
     if(tokenRst != null){
@@ -45,23 +45,23 @@ class ReadApplicationSimpleInfoRequest implements ExchangeUserTokenRequiredReque
   static final staticValidateWithSettings = ssoConvertToExchangeFormatFunc(staticValidate);
 }
 
-InteractiveSSOExchangeFormat<ReadApplicationSimpleInfoRequest, ExchangedReturnedAppSimpleInfo, void, Map<String,dynamic>, Map<String,dynamic>, void> readApplicationSimpleInfoAPI = ExchangeFormat(
-  exchangeProtocolName: 'readApplicationSimpleInfoAPI', 
+InteractiveSSOExchangeFormat<ReadApplicationInfoRequest, ExchangedReturnedAppInfo, void, Map<String,dynamic>, Map<String,dynamic>, void> readApplicationInfoAPI = ExchangeFormat(
+  exchangeProtocolName: 'readApplicationInfoAPI', 
   httpMetaData: ExchangeHTTPMetaData(
     method: ExchangeHTTPMethod.GET, 
     successfulHTTPCode: 200, 
     possibleHTTPCodes: [200, 400, 403, 404, 500], 
-    relativePathWithParameterMarkedWithLtAndGtSymbols: 'apps/<client_id>/simple_info'
+    relativePathWithParameterMarkedWithLtAndGtSymbols: 'apps/<client_id>'
   ), 
   rateLimitMetaData: const ExchangeRateLimitMetaData(
     numRequestPerUserPerMin: 6
   ), 
-  parseRequest: ReadApplicationSimpleInfoRequest.staticDeserializeWithSettings, 
-  serializeRequest: ReadApplicationSimpleInfoRequest.staticSerializeWithSettings, 
-  validateRequest: ReadApplicationSimpleInfoRequest.staticValidateWithSettings, 
-  parseSuccessResponseData: ExchangedReturnedAppSimpleInfo.staticDeserializeWithSettings, 
+  parseRequest: ReadApplicationInfoRequest.staticDeserializeWithSettings, 
+  serializeRequest: ReadApplicationInfoRequest.staticSerializeWithSettings, 
+  validateRequest: ReadApplicationInfoRequest.staticValidateWithSettings, 
+  parseSuccessResponseData: ExchangedReturnedAppInfo.staticDeserializeWithSettings, 
   parseFailedResponseData: ssoExchangeVoidToVoidFunc, 
-  serializeSuccessResponseData: ExchangedReturnedAppSimpleInfo.staticSerializeWithSettings, 
+  serializeSuccessResponseData: ExchangedReturnedAppInfo.staticSerializeWithSettings, 
   serializeFailedResponseData: ssoExchangeVoidToVoidFunc, 
   requireVerificationCode: false
 );
