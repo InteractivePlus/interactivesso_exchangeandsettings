@@ -44,13 +44,13 @@ class RequestEditAPPVericodeRequest implements ExchangeUserTokenRequiredRequest{
   static final staticValidateWithSettings = ssoConvertToExchangeFormatFunc(staticValidate);
 }
 
-InteractiveSSOExchangeFormat<RequestEditAPPVericodeRequest, void, void, Map<String,dynamic>, void, void> requestManageAppVericodeAPI = ExchangeFormat(
-  exchangeProtocolName: 'requestManageAppVericodeAPI', 
+InteractiveSSOExchangeFormat<RequestEditAPPVericodeRequest, void, void, Map<String,dynamic>, void, void> requestEditAppVericodeAPI = ExchangeFormat(
+  exchangeProtocolName: 'requestEditAppVericodeAPI', 
   httpMetaData: const ExchangeHTTPMetaData(
     method: ExchangeHTTPMethod.POST, 
     successfulHTTPCode: 201, 
     possibleHTTPCodes: [201, 400, 403, 500], 
-    relativePathWithParameterMarkedWithLtAndGtSymbols: '/user/<user_unique_id>/verification_messages/manage_app'
+    relativePathWithParameterMarkedWithLtAndGtSymbols: '/user/<user_unique_id>/verification_messages/edit_app'
   ), 
   rateLimitMetaData: const ExchangeRateLimitMetaData(
     numRequestPerUserPerMin: 5

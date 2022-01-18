@@ -105,8 +105,12 @@ class GetResetPasswordVericodeSuccessfulData{
   @NullablePhoneNumberConverter()
   PhoneNumber? phone;
 
+  @JsonKey(required: true, name: 'user_unique_id')
+  String userUniqueId;
+
   GetResetPasswordVericodeSuccessfulData({
     required this.sentMethod,
+    required this.userUniqueId,
     this.email,
     this.phone
   });

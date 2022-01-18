@@ -1,3 +1,4 @@
+import 'package:interactiveplus_exchangeformat/interactiveplus_exchangeformat.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../CommonTypes/vericoderequiredrequest.dart';
@@ -49,3 +50,25 @@ class ResetUserPasswordRequest implements ExchangedVerificationCodeRequiredReque
     return retList.isEmpty ? null : retList;
   }
 }
+
+InteractiveSSOExchangeFormat<ResetUserPasswordRequest,void, void, Map<String,dynamic>, void, void> resetUserPasswordAPI = ExchangeFormat(
+  exchangeProtocolName: 'resetUserPasswordAPI', 
+  httpMetaData: const ExchangeHTTPMetaData(
+    method: ExchangeHTTPMethod.PATCH, 
+    successfulHTTPCode: 200, 
+    possibleHTTPCodes: [200, 400, 403, 500], 
+    relativePathWithParameterMarkedWithLtAndGtSymbols: 'user/<user_unique_id>'
+  ), 
+  rateLimitMetaData: const ExchangeRateLimitMetaData(
+    numRequestPerUserPerMin: 1
+  ), 
+  parseRequest: ResetUserPasswordRequest.staticDeserializeWithSettings, 
+  serializeRequest: ResetUserPasswordRequest.staticSerializeWithSettings,
+  validateRequest: ResetUserPasswordRequest.validateWithSettings, 
+  parseSuccessResponseData: ssoExchangeVoidToVoidFunc, 
+  parseFailedResponseData: ssoExchangeVoidToVoidFunc, 
+  serializeSuccessResponseData: ssoExchangeVoidToVoidFunc, 
+  serializeFailedResponseData: ssoExchangeVoidToVoidFunc, 
+  requireVerificationCode: true,
+  requiredVerificationCodeScope: 'resetPassword'
+);

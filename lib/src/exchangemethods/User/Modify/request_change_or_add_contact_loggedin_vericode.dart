@@ -6,10 +6,10 @@ import '../../CommonTypes/sendvericoderequest.dart';
 import '../../../interface/exchangeformat.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'change_or_add_contact_loggedin.g.dart';
+part 'request_change_or_add_contact_loggedin_vericode.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class ChangeOrAddContactMethodLoggedInRequest implements ExchangeSendVericodeWithPreferredMethodRequest, ExchangeUserTokenRequiredRequest{
+class RequestChangeOrAddContactMethodLoggedInVericodeRequest implements ExchangeSendVericodeWithPreferredMethodRequest, ExchangeUserTokenRequiredRequest{
   @JsonKey(required: true, name: 'user_access_token')
   @override
   String userAccessToken;
@@ -26,27 +26,27 @@ class ChangeOrAddContactMethodLoggedInRequest implements ExchangeSendVericodeWit
   @override
   bool forcePreferredMethod;
 
-  ChangeOrAddContactMethodLoggedInRequest({
+  RequestChangeOrAddContactMethodLoggedInVericodeRequest({
     required this.userAccessToken,
     required this.userUniqueId,
     this.preferredMethod,
     this.forcePreferredMethod = false
   });
 
-  factory ChangeOrAddContactMethodLoggedInRequest.fromJson(Map<String,dynamic> json) => _$ChangeOrAddContactMethodLoggedInRequestFromJson(json);
+  factory RequestChangeOrAddContactMethodLoggedInVericodeRequest.fromJson(Map<String,dynamic> json) => _$RequestChangeOrAddContactMethodLoggedInVericodeRequestFromJson(json);
   @override
-  Map<String,dynamic> toJson() => _$ChangeOrAddContactMethodLoggedInRequestToJson(this);
+  Map<String,dynamic> toJson() => _$RequestChangeOrAddContactMethodLoggedInVericodeRequestToJson(this);
 
-  static Map<String,dynamic> staticSerialize(ChangeOrAddContactMethodLoggedInRequest o) => o.toJson();
-  static ChangeOrAddContactMethodLoggedInRequest staticDeserialize(Map<String,dynamic> map) => ChangeOrAddContactMethodLoggedInRequest.fromJson(map);
-  static Set<String>? validate(ChangeOrAddContactMethodLoggedInRequest o) => ExchangeUserTokenRequiredRequest.validate(o);
+  static Map<String,dynamic> staticSerialize(RequestChangeOrAddContactMethodLoggedInVericodeRequest o) => o.toJson();
+  static RequestChangeOrAddContactMethodLoggedInVericodeRequest staticDeserialize(Map<String,dynamic> map) => RequestChangeOrAddContactMethodLoggedInVericodeRequest.fromJson(map);
+  static Set<String>? validate(RequestChangeOrAddContactMethodLoggedInVericodeRequest o) => ExchangeUserTokenRequiredRequest.validate(o);
   static final staticSerializeWithSettings = ssoConvertToExchangeFormatFunc(staticSerialize);
   static final staticDeserializeWithSettings = ssoConvertToExchangeFormatFunc(staticDeserialize);
   static final validateWithSettings = ssoConvertToExchangeFormatFunc(validate);
 } 
 
-InteractiveSSOExchangeFormat<ChangeOrAddContactMethodLoggedInRequest, CommunicationMethod, void, Map<String,dynamic>, String, void> changeOrAddContact_LoggedIn_API = ExchangeFormat(
-  exchangeProtocolName: 'changeOrAddContact_LoggedIn_API', 
+InteractiveSSOExchangeFormat<RequestChangeOrAddContactMethodLoggedInVericodeRequest, CommunicationMethod, void, Map<String,dynamic>, String, void> requestChangeOrAddContactLoggedInVericode_API = ExchangeFormat(
+  exchangeProtocolName: 'requestChangeOrAddContactLoggedInVericode_API', 
   httpMetaData: const ExchangeHTTPMetaData(
     method: ExchangeHTTPMethod.GET, 
     successfulHTTPCode: 201, 
@@ -56,9 +56,9 @@ InteractiveSSOExchangeFormat<ChangeOrAddContactMethodLoggedInRequest, Communicat
   rateLimitMetaData: const ExchangeRateLimitMetaData(
     numRequestPerUserPerMin: 1
   ), 
-  parseRequest: ChangeOrAddContactMethodLoggedInRequest.staticDeserializeWithSettings, 
-  serializeRequest: ChangeOrAddContactMethodLoggedInRequest.staticSerializeWithSettings, 
-  validateRequest: ChangeOrAddContactMethodLoggedInRequest.validateWithSettings,
+  parseRequest: RequestChangeOrAddContactMethodLoggedInVericodeRequest.staticDeserializeWithSettings, 
+  serializeRequest: RequestChangeOrAddContactMethodLoggedInVericodeRequest.staticSerializeWithSettings, 
+  validateRequest: RequestChangeOrAddContactMethodLoggedInVericodeRequest.validateWithSettings,
   parseSuccessResponseData: ssoConvertToExchangeFormatFunc(CommunicationMethod.fromJson), 
   parseFailedResponseData: ssoExchangeVoidToVoidFunc, 
   serializeSuccessResponseData: ssoConvertToExchangeFormatFunc(Serializable.convertToSerialized), 

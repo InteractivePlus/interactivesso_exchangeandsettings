@@ -9,7 +9,7 @@ import '../..//CommonTypes/vericoderequiredrequest.dart';
 part 'edit_app_manager_list.g.dart';
 
 @JsonSerializable()
-class EditAppManageListRequest implements ExchangedVerificationCodeRequiredRequest, ExchangeUserTokenRequiredRequest{
+class EditAppManagerListRequest implements ExchangedVerificationCodeRequiredRequest, ExchangeUserTokenRequiredRequest{
   @JsonKey(required: true, name: 'is_vericode_short_id')
   @override
   bool isVericodeShortId;
@@ -32,7 +32,7 @@ class EditAppManageListRequest implements ExchangedVerificationCodeRequiredReque
   @JsonKey(required: true, name: 'new_manager_list')
   Set<String> newManagerListExcludingOwner;
 
-  EditAppManageListRequest({
+  EditAppManagerListRequest({
     required this.isVericodeShortId,
     required this.vericodeId,
     required this.userUniqueId,
@@ -40,11 +40,11 @@ class EditAppManageListRequest implements ExchangedVerificationCodeRequiredReque
     required this.appClientId,
     required this.newManagerListExcludingOwner
   });
-  factory EditAppManageListRequest.fromJson(Map<String,dynamic> json) => _$EditAppManageListRequestFromJson(json);
-  Map<String,dynamic> toJson() => _$EditAppManageListRequestToJson(this);
-  static Map<String,dynamic> staticSerialize(EditAppManageListRequest req) => req.toJson();
-  static EditAppManageListRequest staticDeserialize(Map<String,dynamic> serialized) => EditAppManageListRequest.fromJson(serialized);
-  static Set<String>? staticValidate(EditAppManageListRequest req){
+  factory EditAppManagerListRequest.fromJson(Map<String,dynamic> json) => _$EditAppManagerListRequestFromJson(json);
+  Map<String,dynamic> toJson() => _$EditAppManagerListRequestToJson(this);
+  static Map<String,dynamic> staticSerialize(EditAppManagerListRequest req) => req.toJson();
+  static EditAppManagerListRequest staticDeserialize(Map<String,dynamic> serialized) => EditAppManagerListRequest.fromJson(serialized);
+  static Set<String>? staticValidate(EditAppManagerListRequest req){
     Set<String> retList = {};
     var veriCodeRst = ExchangedVerificationCodeRequiredRequest.validate(req);
     var tokenRst = ExchangeUserTokenRequiredRequest.validate(req);
@@ -64,8 +64,8 @@ class EditAppManageListRequest implements ExchangedVerificationCodeRequiredReque
   static final staticValidateWithSettings = ssoConvertToExchangeFormatFunc(staticValidate);
 }
 
-InteractiveSSOExchangeFormat<EditAppManageListRequest, ExchangedReturnedAppInfo, void, Map<String,dynamic>, Map<String,dynamic>, void> editAppManageList = ExchangeFormat(
-  exchangeProtocolName: 'editAppManageList', 
+InteractiveSSOExchangeFormat<EditAppManagerListRequest, ExchangedReturnedAppInfo, void, Map<String,dynamic>, Map<String,dynamic>, void> editAppManagerListAPI = ExchangeFormat(
+  exchangeProtocolName: 'editAppManagerListAPI', 
   httpMetaData: const ExchangeHTTPMetaData(
     method: ExchangeHTTPMethod.PATCH, 
     successfulHTTPCode: 200, 
@@ -74,9 +74,9 @@ InteractiveSSOExchangeFormat<EditAppManageListRequest, ExchangedReturnedAppInfo,
     rateLimitMetaData: const ExchangeRateLimitMetaData(
       numRequestPerUserPerMin: 5
     ), 
-    parseRequest: EditAppManageListRequest.staticDeserializeWithSettings, 
-    serializeRequest: EditAppManageListRequest.staticSerializeWithSettings, 
-    validateRequest: EditAppManageListRequest.staticValidateWithSettings,
+    parseRequest: EditAppManagerListRequest.staticDeserializeWithSettings, 
+    serializeRequest: EditAppManagerListRequest.staticSerializeWithSettings, 
+    validateRequest: EditAppManagerListRequest.staticValidateWithSettings,
     parseSuccessResponseData: ExchangedReturnedAppInfo.staticDeserializeWithSettings, 
     parseFailedResponseData: ssoExchangeVoidToVoidFunc, 
     serializeSuccessResponseData: ExchangedReturnedAppInfo.staticSerializeWithSettings, 

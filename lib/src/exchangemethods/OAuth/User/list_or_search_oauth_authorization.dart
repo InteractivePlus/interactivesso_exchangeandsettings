@@ -6,10 +6,10 @@ import '../../CommonTypes/searchentitylimitedrequest.dart';
 import '../../CommonTypes/searchresults.dart';
 import '../../../interface/exchangeformat.dart';
 
-part 'list_or_search_authorized_records.g.dart';
+part 'list_or_search_oauth_authorization.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class ListOrSearchAuthorizedRecordsRequest implements ExchangeUserTokenRequiredRequest, ExchangeSearchEntityLimitedRequest {
+class ListOrSearchOAuthAuthorizationRequest implements ExchangeUserTokenRequiredRequest, ExchangeSearchEntityLimitedRequest {
   @JsonKey(required:  true, name: 'user_access_token')
   @override
   String userAccessToken;
@@ -29,21 +29,21 @@ class ListOrSearchAuthorizedRecordsRequest implements ExchangeUserTokenRequiredR
   @override
   int searchOffset;
 
-  ListOrSearchAuthorizedRecordsRequest({
+  ListOrSearchOAuthAuthorizationRequest({
     required this.userAccessToken,
     required this.userUniqueId,
     this.searchAppDisplayNamePartial,
     this.searchOffset = 0,
     this.searchLimit
   });
-  factory ListOrSearchAuthorizedRecordsRequest.fromJson(Map<String,dynamic> json) => _$ListOrSearchAuthorizedRecordsRequestFromJson(json);
-  Map<String,dynamic> toJson() => _$ListOrSearchAuthorizedRecordsRequestToJson(this);
-  static Map<String,dynamic> staticSerialize(ListOrSearchAuthorizedRecordsRequest req) => req.toJson();
-  static ListOrSearchAuthorizedRecordsRequest staticDeserialize(Map<String,dynamic> json) => ListOrSearchAuthorizedRecordsRequest.fromJson(json);
+  factory ListOrSearchOAuthAuthorizationRequest.fromJson(Map<String,dynamic> json) => _$ListOrSearchOAuthAuthorizationRequestFromJson(json);
+  Map<String,dynamic> toJson() => _$ListOrSearchOAuthAuthorizationRequestToJson(this);
+  static Map<String,dynamic> staticSerialize(ListOrSearchOAuthAuthorizationRequest req) => req.toJson();
+  static ListOrSearchOAuthAuthorizationRequest staticDeserialize(Map<String,dynamic> json) => ListOrSearchOAuthAuthorizationRequest.fromJson(json);
   static final staticSerializeWithSettings = ssoConvertToExchangeFormatFunc(staticSerialize);
   static final staticDeserializeWithSettings = ssoConvertToExchangeFormatFunc(staticDeserialize);
   static Set<String>? staticValidateWithSettings<FineSetting extends InteractiveSSOExchangeSharedSetting>(
-    ListOrSearchAuthorizedRecordsRequest req,
+    ListOrSearchOAuthAuthorizationRequest req,
     FineSetting sharedSettings
   ){
     Set<String> retList = {};
@@ -59,8 +59,8 @@ class ListOrSearchAuthorizedRecordsRequest implements ExchangeUserTokenRequiredR
   }
 }
 
-InteractiveSSOExchangeFormat<ListOrSearchAuthorizedRecordsRequest, ExchangeSearchAuthorizationRecordsResult, void, Map<String,dynamic>, Map<String,dynamic>, void> listOrSearchAuthorizedRecords = ExchangeFormat(
-  exchangeProtocolName: 'listOrSearchAuthorizedRecords', 
+InteractiveSSOExchangeFormat<ListOrSearchOAuthAuthorizationRequest, ExchangeSearchAuthorizationRecordsResult, void, Map<String,dynamic>, Map<String,dynamic>, void> listOrSearchOAuthAuthorizationAPI = ExchangeFormat(
+  exchangeProtocolName: 'listOrSearchOAuthAuthorizationAPI', 
   httpMetaData: const ExchangeHTTPMetaData(
     method: ExchangeHTTPMethod.GET, 
     successfulHTTPCode: 200, 
@@ -70,9 +70,9 @@ InteractiveSSOExchangeFormat<ListOrSearchAuthorizedRecordsRequest, ExchangeSearc
   rateLimitMetaData: const ExchangeRateLimitMetaData(
     numRequestPerUserPerMin: 10
   ), 
-  parseRequest: ListOrSearchAuthorizedRecordsRequest.staticDeserializeWithSettings, 
-  serializeRequest: ListOrSearchAuthorizedRecordsRequest.staticSerializeWithSettings,
-  validateRequest: ListOrSearchAuthorizedRecordsRequest.staticValidateWithSettings, 
+  parseRequest: ListOrSearchOAuthAuthorizationRequest.staticDeserializeWithSettings, 
+  serializeRequest: ListOrSearchOAuthAuthorizationRequest.staticSerializeWithSettings,
+  validateRequest: ListOrSearchOAuthAuthorizationRequest.staticValidateWithSettings, 
   parseSuccessResponseData: exchangeSearchAuthorizationRecordsResultStaticDeserializeWithSettings, 
   parseFailedResponseData: ssoExchangeVoidToVoidFunc, 
   serializeSuccessResponseData: exchangeSearchAuthorizationRecordsResultStaticSerializeWithSettings, 

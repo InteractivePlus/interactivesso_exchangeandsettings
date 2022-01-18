@@ -68,7 +68,7 @@ class TransferAPPOwnershipRequest implements ExchangedVerificationCodeRequiredRe
   static final staticValidateWithSettings = ssoConvertToExchangeFormatFunc(staticValidate);
 }
 
-InteractiveSSOExchangeFormat<TransferAPPOwnershipRequest, ExchangedReturnedAppInfo, void, Map<String,dynamic>, Map<String,dynamic>, void> tranferAppOwnershipAPI = ExchangeFormat(
+InteractiveSSOExchangeFormat<TransferAPPOwnershipRequest, ExchangedReturnedAppInfo, void, Map<String,dynamic>, Map<String,dynamic>, void> transferAppOwnershipAPI = ExchangeFormat(
   exchangeProtocolName: 'transferAppOwnershipAPI', 
   httpMetaData: const ExchangeHTTPMetaData(
     method: ExchangeHTTPMethod.PATCH, 
